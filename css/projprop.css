@@ -1,0 +1,382 @@
+/*
+ * Proposalform "Add new proposal" header styling
+ * ----------------------------------------------
+ */
+
+#proposal-form h3 {
+  font-size: 1.25em;
+  font-weight: normal;
+}
+
+
+/*
+ * Proposals header styling
+ * ------------------------
+ */
+
+div.main-container div.proposal,
+#edit-proposal {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin-bottom: 20px;
+}
+
+div.main-container div.proposal div.proposal-header,
+#edit-proposal-header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: #fff;
+  font-size: 1.1em;
+}
+
+div.main-container div.proposal div.proposal-header {
+  padding: 0 7px 3px 7px;
+  background-color: #66829f;
+}
+
+div.main-container div.proposal div.proposal-header > h2 {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 0;
+  padding: 5px 0;
+}
+
+div.main-container div.proposal div.proposal-header > div.author,
+div.main-container div.proposal div.proposal-header > div.deadline,
+div.main-container div.proposal div.proposal-header > div.duration {
+  display: inline-block;
+}
+
+div.main-container div.proposal div.proposal-header > div.author {
+  width: 24.3%;
+}
+
+div.main-container div.proposal div.proposal-header > div.deadline {
+  width: 24%;
+}
+
+div.main-container div.proposal div.proposal-header > div.deadline .field-label,
+div.main-container div.proposal div.proposal-header > div.deadline .field-items {
+  display: inline-block;
+}
+
+div.main-container div.proposal div.proposal-header > div.author a {
+  color: white;
+}
+
+/* Autocomplete box theming */
+#autocomplete {
+  background-color: #fff;
+  border: none;
+  box-shadow: 0 5px 10px #333;
+  padding: 2px 1px;
+}
+
+#autocomplete li {
+  border-top: 1px solid #888;
+  padding: 5px 2px;
+}
+
+#autocomplete li:first-child {
+  border-top: none;
+}
+
+#autocomplete div {
+  width: 100% !important;
+}
+/* End of autocomplete box theming */
+
+
+/*
+ * Editing proposal header theming
+ * -------------------------------
+ */
+
+#edit-proposal-header {
+  margin: 5px 0 0 0;
+  padding: 5px 7px 3px 7px;
+  background-color: #f39a5d;
+}
+
+#edit-proposal-header > div {
+  display: inline-block;
+  vertical-align: top;
+  width: 23.9%;
+}
+
+#edit-proposal-header label {
+  display: block;
+}
+
+#edit-proposal-header .title div {
+  width: 100% !important;
+}
+
+#edit-proposal-header .title {
+  display: block;
+}
+
+#edit-proposal-header div.form-required > input {
+  width: 76%;
+}
+
+#edit-proposal-header label.required {
+  color: white;
+}
+
+#edit-proposal-header .form-required {
+  color: white;
+}
+
+#edit-proposal-header .container-inline-date div {
+  width: auto;
+}
+
+/* Remove the display of the "Date" text below the Deadline label */
+#edit-proposalform-proposal-deadline label {
+  display: none;
+}
+
+#edit-proposal-header .container-inline-date label.required {
+  display: block;
+}
+
+#edit-proposal-header .container-inline-date .date-padding {
+  padding: 0;
+}
+
+#edit-proposalform-proposal-deadline-datepicker-popup-0 {
+  margin: 0;
+}
+
+
+/*
+ * Proposal theming
+ * ----------------
+ */
+
+div.main-container div.proposal div.content,
+#edit-content {
+  border-left: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+  border-bottom: 1px solid #dcdcdc;
+  float: left;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  font-size: 1em;
+}
+
+div.main-container div.proposal div.content div.field {
+  display: inline-block;
+  vertical-align: top;
+}
+
+div.main-container div.proposal div.content div.field p {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+}
+
+div.main-container div.proposal div.content > div.first-row,
+div.main-container div.proposal div.content > div.third-row,
+#edit-first-row,
+#edit-third-row {
+  background-color: #f5f5f5;
+  border-right: 1px solid #dcdcdc;
+  display: inline-block;
+  float: left;
+  margin: 0;
+  padding: 2px 7px 6px 6px;
+  width: 75%;
+}
+
+div.main-container div.proposal div.content > div.second-row,
+#edit-second-row {
+  border-right: 1px solid #dcdcdc;
+  display: inline-block;
+  float: left;
+  margin: 0;
+  padding: 2px 7px 6px 6px;
+  width: 75%;
+}
+
+/* This sets up proper widths for the fields in the first row */
+div.main-container div.proposal .dsv-coordinating,
+div.main-container div.proposal .other-coordinator,
+div.main-container div.proposal .program-call-target {
+  display: inline-block;
+  width: 33%;
+}
+
+/* This sets up proper widths for the fields in the second row */
+div.main-container div.proposal .cofinancing-needed,
+div.main-container div.proposal .cofinancing-covered-by,
+div.main-container div.proposal .oh-costs-covered {
+  display: inline-block;
+  width: 33%;
+}
+
+/* This sets up proper widths for the fields in the third row */
+div.main-container div.proposal .funding-organization,
+div.main-container div.proposal .total-budget-amount,
+div.main-container div.proposal .budget-amount-dsv {
+  display: inline-block;
+  width: 33%;
+}
+
+/* This sets up the right section so that the Edit module plays along nicely */
+div.main-container div.proposal div.content > div.right-section > div.ok-dsv-economy,
+div.main-container div.proposal div.content > div.right-section > div.forskningsservice-informed,
+div.main-container div.proposal div.content > div.right-section > div.ok-from-uno,
+div.main-container div.proposal div.content > div.right-section > div.sent-to-birgitta {
+  display: block;
+}
+
+div.main-container div.proposal div.first-row div.field-label,
+div.main-container div.proposal div.second-row div.field-label,
+div.main-container div.proposal div.third-row div.field-label {
+  display: block;
+  width: 100%;
+}
+
+div.main-container div.proposal div.right-section,
+#edit-right-section {
+  display: block;
+  line-height: 2em;
+  margin: 0;
+  text-align: right;
+  padding-top: 7px;
+  padding-right: 7px;
+}
+
+div.main-container div.proposal div.content > div.right-section > a {
+  background-color: #e17e33;
+  border: 1px solid #eb7125;
+  border-radius: 2px;
+  color: white;
+  padding: 1px 7px;
+}
+
+div.main-container div.proposal .right-section a:hover {
+  text-decoration: none;
+}
+
+
+/*
+ * Editing proposal styling
+ * ------------------------
+ */
+
+#edit-proposal,
+#edit-content {
+  margin-bottom: 0;
+}
+
+#edit-proposal input {
+  border-radius: 2px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  height: 21px;
+  margin: 0px;
+  padding: 1px 3px;
+  width: 82%;
+}
+
+#edit-proposal span.input-group-addon {
+  display: none;
+}
+
+#edit-proposal .radio,
+#edit-proposal .checkbox {
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+/* This overrides Bootstrap stupid decision to bold all field labels EXCEPT checkbox labels */
+#edit-proposal #edit-content label {
+  font-weight: bold;
+}
+
+#edit-first-row > div,
+#edit-second-row > div,
+#edit-third-row > div {
+  display: inline-block;
+  vertical-align: top;
+  width: 32%;
+}
+
+#edit-right-section div {
+  display: inline-block;
+  padding-left: 16px;
+}
+
+#edit-right-section div.form-required {
+  display: block;
+}
+
+#edit-right-section label {
+  display: inline-block;
+  float: left;
+  line-height: normal;
+  margin: 0 5px 0 3px;
+}
+
+#edit-right-section input {
+  display: inline-block;
+  height: auto;
+  margin-right: 1px;
+  vertical-align: baseline;
+  width: auto;
+}
+
+#edit-right-section .checkbox {
+  padding-left: 38px;
+}
+
+#edit-right-section .radio {
+  padding-left: 10px;
+}
+
+#edit-proposalform-proposal-is-dsv-coordinating label {
+  font-weight: normal !important;
+}
+
+#edit-proposalform-proposal-is-dsv-coordinating input {
+  float: none;
+  vertical-align: middle;
+  width: auto;
+}
+
+#edit-proposalform-proposal-is-dsv-coordinating .radio {
+  display: inline-block;
+  margin-right: 12px;
+}
+
+#edit-proposalform-proposal-currency,
+#edit-proposalform-proposal-currency div {
+  display: inline-block !important;
+}
+
+#edit-proposalform-proposal-currency div {
+  margin-left: 4px;
+}
+
+#edit-proposalform-proposal-currency div > label {
+  margin-right: 1px;
+}
+
+#edit-proposalform-proposal-cancel,
+#edit-proposalform-proposal-submit {
+  border-radius: 2px;
+  color: white;
+  font-size: 1.1em;
+  padding: 1px 7px;
+}
+
+#edit-proposalform-proposal-cancel {
+  background-color: #66829f;
+  border: 1px solid #002f5f;
+  margin-right: 5px !important;
+}
+
+#edit-proposalform-proposal-submit {
+  border: 1px solid #eb7215;
+  background-color: #e17e33;
+}
