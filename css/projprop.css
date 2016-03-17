@@ -187,6 +187,7 @@ div.main-container div.proposal div.content > div.third-row,
 }
 
 div.main-container div.proposal div.content > div.second-row,
+div.main-container div.proposal div.content > div.fourth-row,
 #edit-second-row {
   border-right: 1px solid #dcdcdc;
   display: inline-block;
@@ -220,17 +221,27 @@ div.main-container div.proposal .budget-amount-dsv {
   width: 33%;
 }
 
+div.main-container div.proposal div.fourth-row .attachments-unit,
+div.main-container div.proposal div.fourth-row .attachments-dsv-economy,
+div.main-container div.proposal div.fourth-row .attachments-vice-head,
+div.main-container div.proposal div.fourth-row .final-attachments {
+  display: inline-block;
+  width: 33%;
+}
+
 /* This sets up the right section so that the Edit module plays along nicely */
-div.main-container div.proposal div.content > div.right-section > div.ok-dsv-economy,
+div.main-container div.proposal div.content > div.right-section > div.ok-from-dsv-economy,
 div.main-container div.proposal div.content > div.right-section > div.forskningsservice-informed,
-div.main-container div.proposal div.content > div.right-section > div.ok-from-uno,
+div.main-container div.proposal div.content > div.right-section > div.ok-from-vice-head,
+div.main-container div.proposal div.content > div.right-section > div.ok-from-unit-head,
 div.main-container div.proposal div.content > div.right-section > div.sent-to-birgitta {
   display: block;
 }
 
 div.main-container div.proposal div.first-row div.field-label,
 div.main-container div.proposal div.second-row div.field-label,
-div.main-container div.proposal div.third-row div.field-label {
+div.main-container div.proposal div.third-row div.field-label,
+div.main-container div.proposal div.fourth-row div.field-label {
   display: block;
   width: 100%;
 }
@@ -245,11 +256,29 @@ div.main-container div.proposal div.right-section,
   padding-right: 7px;
 }
 
-div.main-container div.proposal div.content > div.right-section > a {
+div.main-container div.proposal div.content > div.right-section a.approve, 
+div.main-container div.proposal div.content > div.right-section a.edit {
   background-color: #e17e33;
   border: 1px solid #eb7125;
   border-radius: 2px;
   color: white;
+  padding: 1px 7px;
+}
+
+div.main-container div.proposal div.content > div.right-section span.not-approved { 
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding: 1px 7px;
+    border-radius: 2px;
+}
+
+div.main-container div.proposal div.content > div.right-section a.approved,
+div.main-container div.proposal div.content > div.right-section span.approved {
+  background-color: #dff0d8;
+  border: 1px solid #d6e9c6;
+  border-radius: 2px;
+  color: #468847;
   padding: 1px 7px;
 }
 
@@ -290,7 +319,7 @@ div.main-container div.proposal .right-section a:hover {
 }
 
 /* This overrides Bootstrap stupid decision to bold all field labels EXCEPT checkbox labels */
-#edit-proposal #edit-content label {
+#edit-proposal #edit-content label, .field-label {
   font-weight: bold;
 }
 

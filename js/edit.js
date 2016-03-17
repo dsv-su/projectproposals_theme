@@ -1,4 +1,31 @@
 jQuery( function() {
+  jQuery( '.approve' ).click (function() {
+    var approveby = this.className.replace('approve ','');
+//    var nid = jQuery(this).parents().eq(2).attr('id').replace('node-', '');
+    var target = jQuery( this ).attr( 'href' ) + '/' + approveby;
+    var button = this;
+
+    jQuery.ajax({
+      url: target,
+      dataType: 'json',
+      success: function(data) {
+        console.log('SUCCESS');
+        console.log( data );
+        //jQuery(button).parent().find( '.ok-from-' + approveby ).find('.field-item').text( "Yes");
+        jQuery(button).text('Yes');
+        jQuery(button).removeClass('approve');
+        jQuery(button).addClass('approved');
+      },
+      error: function() {
+        alert( 'An error occurred while processing your request' );
+      }
+    });
+    
+    return false;
+  });
+});
+
+/*jQuery( function() {
   jQuery( '.edit' ).click( function() {
     var disabled = jQuery( this ).attr( 'disabled' );
     if ( disabled == 'true') {
@@ -10,11 +37,12 @@ jQuery( function() {
       dataType: 'json',
       success: function( data ) {
         var checkboxes = new Array();
-        checkboxes[1] = 'edit-proposalform-proposal-co-financing-needed';
-        checkboxes[2] = 'edit-proposalform-proposal-ok-from-dsv-economy';
-        checkboxes[3] = 'edit-proposalform-proposal-forskningsservice-informed';
-        checkboxes[4] = 'edit-proposalform-proposal-ok-from-uno';
-        checkboxes[5] = 'edit-proposalform-proposal-sent-to-birgitta-o';
+        checkboxes[0] = 'edit-proposalform-proposal-co-financing-needed';
+        checkboxes[1] = 'edit-proposalform-proposal-ok-from-dsv-economy';
+        checkboxes[2] = 'edit-proposalform-proposal-forskningsservice-informed';
+        checkboxes[3] = 'edit-proposalform-proposal-ok-from-uno';
+        checkboxes[4] = 'edit-proposalform-proposal-sent-to-birgitta-o';
+        checkboxes[5] = 'edit-proposalform-proposal-ok-from-unit-head';
 
         jQuery.each( data, function( key, value ) {
           // We need special treatment for some fields
@@ -54,6 +82,20 @@ jQuery( function() {
                 document.getElementById( key + '---2' ).checked = true;
                 break;
             }
+
+          } else if ( key == 'edit-proposalform-proposal-attachment-unit-upload' ) {
+html = '<div class="form-control" id="lol">';
+value.forEach(function(item) {
+    html += '<span class="file"><a href="' + item[1]+ '">' + item[0] + "</a><br/></span>";
+});
+html += '<input type="hidden" value="22, 23" name="proposalform_proposal_attachment_unit_already[fid]"></input></div>';
+jQuery( '#' + key ).parent().parent().parent().prepend(html);
+
+                  console.log(value[0]);
+                 console.log(value[1]);
+                 // jQuery( '#' + key ).parent().prepend(html);
+            //jQuery( '#' + key ).attr( 'default_value', value );
+            //jQuery( '#' + key ).val( value );
           }
 
           // If all other checks fail, just plainly assign values
@@ -94,3 +136,4 @@ jQuery( function() {
     return false;
   });
 });
+*/
