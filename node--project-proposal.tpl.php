@@ -235,14 +235,26 @@
             print '<div class="attachments-unit">';
             print render($content['field_attachment_unit']);
             print '</div>';
+
+            print '<div class="comments-unit">';
+            print render($content['field_comments_to_unit_head']);
+            print '</div>';
         }
 
         print '<div class="attachments-dsv-economy">';
         print render($content['field_attachment_to_dsv_economy']);
         print '</div>';
 
+        print '<div class="comments-dsv-economy">';
+        print render($content['field_comments_to_dsv_economy']);
+        print '</div>';
+
         print '<div class="attachments-vice-head">';
         print render($content['field_attachments_to_vice_head']);
+        print '</div>';
+
+        print '<div class="comments-vice-head">';
+        print render($content['field_comments_to_vice_head']);
         print '</div>';
 
         print '<div class="final-attachments">';
@@ -299,12 +311,12 @@
         print '</div>';
 
         // Sent to Birgitta
-        print '<div class="sent-to-birgitta">';
+        print '<div class="final-submissions">';
         //print render($content['field_sent_to_birgitta_o']);
         if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
-            print '<span class="field-label">Sent to Birgitta:</span> <span class="approved">Yes</span>';
+            print '<span class="field-label">Final submission:</span> <span class="approved">Yes</span>';
         } else {
-            print '<span class="field-label">Sent to Birgitta:</span> <span class="not-approved">No</span>';
+            print '<span class="field-label">Final submission:</span> <span class="not-approved">No</span>';
         }
         print '</div>';
 
