@@ -8,6 +8,21 @@
   font-weight: normal;
 }
 
+#page-header {
+  /*float: left;*/
+  text-align: right;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+#page-header a {
+  color: #002e5f;
+  font-family: Verdana;
+  line-height: 16.5px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+}
 
 /*
  * Proposals header styling
@@ -42,7 +57,8 @@ div.main-container div.proposal div.proposal-header > h2 {
 
 div.main-container div.proposal div.proposal-header > div.author,
 div.main-container div.proposal div.proposal-header > div.deadline,
-div.main-container div.proposal div.proposal-header > div.duration {
+div.main-container div.proposal div.proposal-header > div.duration,
+div.main-container div.proposal div.proposal-header > div.editors {
   display: inline-block;
 }
 
@@ -50,7 +66,8 @@ div.main-container div.proposal div.proposal-header > div.author {
   width: 24.3%;
 }
 
-div.main-container div.proposal div.proposal-header > div.deadline {
+div.main-container div.proposal div.proposal-header > div.deadline,
+div.main-container div.proposal div.proposal-header > div.duration {
   width: 24%;
 }
 

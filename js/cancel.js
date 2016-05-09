@@ -1,4 +1,51 @@
 jQuery( function() {
+  jQuery( '.cancel' ).click (function() {
+    
+    var button = this;
+
+    if (confirm("Are you sure? This will cancel your proposal and all stakeholders will get informed. " +
+        "You will be able to un-cancel it later though.")) {
+
+        this.className.replace('cancel ','');
+        var action = 'cancel';
+        if (jQuery(button).hasClass('cancelled')) {
+            action = 'uncancel';
+        }
+        var target = jQuery( this ).attr( 'href' ) + '/' + action;
+        var title = jQuery( this ).parents().eq(2).children( '.proposal-header' ).children( 'h2:first' );
+        console.log (title);
+        
+
+
+        jQuery.ajax({
+          url: target,
+          dataType: 'json',
+          success: function(data) {
+            console.log('SUCCESS');
+            console.log( data );
+            if (action == 'cancel') {
+                //console.log(title);
+                jQuery(title).append(' (Cancelled)');
+                jQuery(button).text('Un-cancel proposal');
+                jQuery(button).addClass('cancelled');
+            } else {
+                jQuery(title).text(function(_,txt) {return txt.slice(0, -12);});
+                jQuery(button).text('Cancel proposal');
+                jQuery(button).removeClass('cancelled'); 
+            }
+          },
+          error: function() {
+            alert( 'An error occurred while processing your request' );
+          }
+        });
+    }
+    
+    return false;
+
+  });
+});
+
+/*jQuery( function() {
   jQuery( '#edit-proposalform-proposal-cancel' ).click( function() {
     // Empty all fields and set values
     jQuery( '#edit-proposalform-proposal-edit-node' ).val( '' );
@@ -52,3 +99,4 @@ jQuery( function() {
     return false;
   });
 });
+*/

@@ -118,12 +118,17 @@
     $economy = true;
     $editable = true;
   }
+
+  $cancellable = true;
   ?>
 
   <div class="proposal-header">
     <?php print render($title_prefix); ?>
     <?php if (!$page): ?>
-      <h2<?php print $title_attributes; ?>><?php print $title; ?></h2>
+      <h2<?php print $title_attributes; ?>><?php print $title;
+      if ($node->field_cancelled['und'][0]['value']) {
+        print ' (Cancelled)';
+      } ?></h2>
     <?php endif; ?>
     <?php print render($title_suffix); ?>
 
@@ -141,6 +146,24 @@
     <!-- Duration -->
     <div class="duration">
       <?php print render($content['field_duration']); ?>
+    </div>
+
+    <!-- Editors -->
+    <div class="editors">
+        <?php 
+        print 'Editors: ';
+        $editors = array_unique(array_map(create_function('$o', 'return $o->uid;'), node_revision_list($node)));
+        $lasteditor = end($editors);
+        foreach ($editors as $key => $uid) {
+            $editor = user_load($uid);
+            print $editor->realname;
+            if ($uid == $lasteditor) {
+                print '';
+            } else {
+                print ', ';
+            }
+        }
+        ?>
     </div>
 
   </div>
@@ -230,36 +253,49 @@
         // -------------------------------
         print '<div class="fourth-row">';
 
-        // Hide attachment to Unit head when Final attachments are uploaded.
-        if (!$node->field_final_attachments['und']) {
-            print '<div class="attachments-unit">';
-            print render($content['field_attachment_unit']);
+        // We only show Attachments/Comments for authors or editors.
+        if ($editable) {
+
+            // Hide attachment to Unit head when Final attachments are uploaded.
+            if (!$node->field_final_attachments['und']) {
+                print '<div class="attachments-unit">';
+                print render($content['field_attachment_unit']);
+                print '</div>';
+
+                print '<div class="comments-unit">';
+                print render($content['field_comments_to_unit_head']);
+                print '</div>';
+            }
+
+            print '<div class="attachments-dsv-economy">';
+            print render($content['field_attachment_to_dsv_economy']);
             print '</div>';
 
-            print '<div class="comments-unit">';
-            print render($content['field_comments_to_unit_head']);
+            print '<div class="comments-dsv-economy">';
+            print render($content['field_comments_to_dsv_economy']);
             print '</div>';
+
+            print '<div class="attachments-vice-head">';
+            print render($content['field_attachments_to_vice_head']);
+            print '</div>';
+
+            print '<div class="comments-vice-head">';
+            print render($content['field_comments_to_vice_head']);
+            print '</div>';
+
+            print '<div class="final-attachments">';
+            print render($content['field_final_attachments']);
+            print '</div>';
+
         }
 
-        print '<div class="attachments-dsv-economy">';
-        print render($content['field_attachment_to_dsv_economy']);
-        print '</div>';
-
-        print '<div class="comments-dsv-economy">';
-        print render($content['field_comments_to_dsv_economy']);
-        print '</div>';
-
-        print '<div class="attachments-vice-head">';
-        print render($content['field_attachments_to_vice_head']);
-        print '</div>';
-
-        print '<div class="comments-vice-head">';
-        print render($content['field_comments_to_vice_head']);
-        print '</div>';
-
-        print '<div class="final-attachments">';
-        print render($content['field_final_attachments']);
-        print '</div>';
+        if ($cancellable) {
+            if ($node->field_cancelled['und'][0]['value']) {
+                print '<br><a href="node/cancel/' . $node->nid . '" class="cancel cancelled">Uncancel proposal</a>';
+            } else {
+                print '<br><a href="node/cancel/' . $node->nid . '" class="cancel">Cancel proposal</a>';
+            }
+        }
 
         print '</div>';
         // End of fourth row
