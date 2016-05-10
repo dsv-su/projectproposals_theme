@@ -3,20 +3,21 @@ jQuery( function() {
     
     var button = this;
 
-    if (confirm("Are you sure? This will cancel your proposal and all stakeholders will get informed. " +
-        "You will be able to un-cancel it later though.")) {
+    var action = 'cancel';
+    var confirmmessage = "Are you sure? This will cancel your proposal and all stakeholders will be informed. " +
+        "You will be able to un-cancel it later though.";
+    if (jQuery(button).hasClass('cancelled')) {
+        action = 'uncancel';
+        confirmmessage = "Are you sure? This will un-cancel your proposal and all stakeholders will be informed.";
+    }
+
+    if (confirm(confirmmessage)) {
 
         this.className.replace('cancel ','');
-        var action = 'cancel';
-        if (jQuery(button).hasClass('cancelled')) {
-            action = 'uncancel';
-        }
         var target = jQuery( this ).attr( 'href' ) + '/' + action;
         var title = jQuery( this ).parents().eq(2).children( '.proposal-header' ).children( 'h2:first' );
         console.log (title);
         
-
-
         jQuery.ajax({
           url: target,
           dataType: 'json',
