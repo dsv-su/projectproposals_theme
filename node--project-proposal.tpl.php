@@ -310,7 +310,7 @@
         //print render($content['field_ok_from_unit_head']);
         if ($node->field_ok_from_unit_head['und'][0]['value']) {
             print '<span class="field-label">OK from Unit head:</span> <span class="approved">Yes</span>';
-        } else if ($admin || $economy) {
+        } else if ($admin || $unithead) {
             print '<span class="field-label">OK from Unit head:</span> <a href="node/approve/'.$node->nid. '" class="approve unit-head">Approve</a>';
         } else {
             print '<span class="field-label">OK from Unit head:</span> <span class="not-approved">No</span>';
