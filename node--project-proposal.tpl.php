@@ -153,6 +153,9 @@
         <?php 
         print 'Editors: ';
         $editors = array_unique(array_map(create_function('$o', 'return $o->uid;'), node_revision_list($node)));
+        if(($key = array_search(1, $editors)) !== false) {
+            unset($editors[$key]);
+        }
         $lasteditor = end($editors);
         foreach ($editors as $key => $uid) {
             $editor = user_load($uid);
