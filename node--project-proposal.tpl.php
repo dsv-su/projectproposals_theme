@@ -153,10 +153,19 @@
         <?php 
         print 'Editors: ';
         $editors = array_unique(array_map(create_function('$o', 'return $o->uid;'), node_revision_list($node)));
-        if(($key = array_search(1, $editors)) !== false) {
+
+        if (($key = array_search(1, $editors)) !== false) {
             unset($editors[$key]);
         }
+
+        if (($key = array_search($uid, $editors)) !== false) {
+            unset($editors[$key]);
+        }
+
         $lasteditor = end($editors);
+        if (!$editors) {
+            print 'none';
+        }
         foreach ($editors as $key => $uid) {
             $editor = user_load($uid);
             print $editor->realname;
