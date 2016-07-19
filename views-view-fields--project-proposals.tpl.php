@@ -33,7 +33,7 @@
   <?php
     if (!strcmp($field->label, 'Title')) {
       // Insert header div
-      print '<div class="proposal-header-lol">TEST';
+      print '<div class="proposal-header">';
 
     } else if (!strcmp($field->label, 'Is DSV coordinating')) {
       // Insert content div

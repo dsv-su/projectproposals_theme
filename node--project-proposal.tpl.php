@@ -373,6 +373,26 @@
             print '<a href="node/' . $node->nid . '/edit" class="edit">Edit</a>';
         }
 
+
+        // This section is only for economy people.
+        if ($economy || $admin) {
+            if ($node->field_economy_owner['und'][0]['uid']) {
+                $tempuser = user_load($node->field_economy_owner['und'][0]['uid']);
+                print '<br>Economy owner: '.$tempuser->realname.'</br>';
+            } else {
+                print '<br>Economy owner: not yet assigned</br>';
+            }
+            //if ($node->field_economy_owner['und'][0]['uid']) {
+                if ($user->uid == $node->field_economy_owner['und'][0]['uid']) {
+                    print '<br><a href="node/economy-own/' . $node->nid . '" class="economy-owner owned">
+                        Unassign the proposal from me</a>';
+                } else {
+                    print '<br><a href="node/economy-own/' . $node->nid . '" class="economy-owner not-owned">
+                    Assign the proposal to me</a>';
+                }
+            //}
+        }
+
         print '</div>';
         // End of right-section
         // -------------------------------

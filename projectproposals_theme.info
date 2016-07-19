@@ -42,3 +42,4 @@ stylesheets[all][] = css/projprop.css
 scripts[] = js/edit.js
 scripts[] = js/cancel.js
 scripts[] = js/submit.js
+scripts[] = js/own.js

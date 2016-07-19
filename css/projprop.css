@@ -24,6 +24,13 @@
   cursor: pointer;
 }
 
+/* Hide 'Remove' button from file picker */
+.hide-remove-button #edit-field-attachment-to-dsv-economy-und-0-remove-button,
+.hide-remove-button #edit-field-attachments-to-vice-head-und-0-remove-button
+ {
+  display: none;
+}
+
 /*
  * Proposals header styling
  * ------------------------
@@ -265,6 +272,7 @@ div.main-container div.proposal div.fourth-row div.field-label {
 
 div.main-container div.proposal div.right-section,
 #edit-right-section {
+  position: relative;
   display: block;
   line-height: 2em;
   margin: 0;
@@ -303,6 +311,11 @@ div.main-container div.proposal .right-section a:hover {
   text-decoration: none;
 }
 
+a.economy-owner {
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+}
 
 /*
  * Editing proposal styling
