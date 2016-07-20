@@ -1,18 +1,20 @@
 jQuery( function() {
-  jQuery( '.approve' ).click (function() {
+  jQuery(' .approve' ).on('click', this, function() {
     var approveby = this.className.replace('approve ','');
 //    var nid = jQuery(this).parents().eq(2).attr('id').replace('node-', '');
     var target = jQuery( this ).attr( 'href' ) + '/' + approveby;
     var button = this;
     var confirmmessage = "Are you sure you want to approve this proposal?";
 
+console.log(button);
+console.log(target);
+
+
     if (confirm(confirmmessage)) {
       jQuery.ajax({
         url: target,
         dataType: 'json',
         success: function(data) {
-          console.log('SUCCESS');
-          console.log( data );
           //jQuery(button).parent().find( '.ok-from-' + approveby ).find('.field-item').text( "Yes");
           jQuery(button).text('Yes');
           jQuery(button).removeClass('approve');

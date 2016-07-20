@@ -1,8 +1,7 @@
 jQuery( function() {
-  jQuery( '.cancel' ).click (function() {
-    
-    var button = this;
+    jQuery(' .cancel' ).on('click', this, function() {
 
+    var button = this;
     var action = 'cancel';
     var confirmmessage = "Are you sure? This will cancel your proposal and all stakeholders will be informed. " +
         "You will be able to un-cancel it later though.";
@@ -16,23 +15,42 @@ jQuery( function() {
         this.className.replace('cancel ','');
         var target = jQuery( this ).attr( 'href' ) + '/' + action;
         var title = jQuery( this ).parents().eq(2).children( '.proposal-header' ).children( 'h2:first' );
-        console.log (title);
-        
+        var proposaldiv = jQuery( this ).parents().eq(2);
+        var nodeid = jQuery(proposaldiv).attr('id').substring(5);
+
+        // Find all buttons that we need to alter depending on cancel-status.
+        var approve = jQuery(proposaldiv).find( ".approve:not(.hidden)");
+        var firstnotapproved = jQuery(approve).parent().find( ".not-approved" );
+
+        var notapproved = jQuery(proposaldiv).find( ".approved:not(.hidden)").parent().next().find( ".not-approved" );
+        if (!notapproved.length) {  
+            notapproved = jQuery(proposaldiv).find( ".not-approved:first" );
+        }
+        var firstapproved = jQuery(notapproved).parent().find( ".approve" );
+
+        var edit = jQuery( this ).parents().eq(2).find( ".edit" );
+
         jQuery.ajax({
           url: target,
           dataType: 'json',
           success: function(data) {
-            console.log('SUCCESS');
-            console.log( data );
             if (action == 'cancel') {
-                //console.log(title);
                 jQuery(title).append(' (Cancelled)');
-                jQuery(button).text('Un-cancel proposal');
+                jQuery(button).text('Uncancel proposal');
                 jQuery(button).addClass('cancelled');
+                jQuery(proposaldiv).fadeTo( 'slow', 0.3 );
+                jQuery(approve).addClass('hidden');
+                jQuery(firstnotapproved).removeClass('hidden');
+                //jQuery(approve).replaceWith('<span class="not-approved">No</span>');
+                jQuery(edit).replaceWith('');
             } else {
                 jQuery(title).text(function(_,txt) {return txt.slice(0, -12);});
                 jQuery(button).text('Cancel proposal');
-                jQuery(button).removeClass('cancelled'); 
+                jQuery(button).removeClass('cancelled');
+                jQuery(firstapproved).removeClass('hidden');
+                jQuery(notapproved).addClass('hidden');
+                jQuery(proposaldiv).fadeTo( 'slow', 1 );
+                //jQuery(firstnotapproved).replaceWith('<a href="node/approve/' + nodeid + '" class="approve '+ approveby +'">Approve</a>');
             }
           },
           error: function() {
