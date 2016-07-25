@@ -6,22 +6,22 @@ jQuery( function() {
     var button = this;
     var confirmmessage = "Are you sure you want to approve this proposal?";
 
-console.log(button);
-console.log(target);
-
-
     if (confirm(confirmmessage)) {
       jQuery.ajax({
         url: target,
         dataType: 'json',
         success: function(data) {
           //jQuery(button).parent().find( '.ok-from-' + approveby ).find('.field-item').text( "Yes");
-          jQuery(button).text('Yes');
+          if (approveby == 'request-dsv-economy' || approveby == 'request-vice-head') {
+            jQuery(button).text('Sent');
+          } else {
+            jQuery(button).text('Yes');
+          }
           jQuery(button).removeClass('approve');
           jQuery(button).addClass('approved');
         },
         error: function() {
-          alert( 'An error occurred while processing your request' );
+          alert( 'You cannot do this.' );
         }
       });
     }

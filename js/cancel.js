@@ -54,7 +54,7 @@ jQuery( function() {
             }
           },
           error: function() {
-            alert( 'An error occurred while processing your request' );
+            alert( 'You cannot do this.' );
           }
         });
     }

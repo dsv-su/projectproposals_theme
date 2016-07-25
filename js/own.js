@@ -15,8 +15,6 @@ jQuery( function() {
         url: target,
         dataType: 'json',
         success: function(data) {
-          console.log('SUCCESS');
-          console.log( data );
           if (action = 'own') {
             jQuery(button).text('Yes');
             jQuery(button).removeClass('not-owned');
@@ -28,7 +26,7 @@ jQuery( function() {
           }
         },
         error: function() {
-          alert( 'An error occurred while processing your request' );
+          alert( 'You cannot do this.' );
         }
       });
     }
