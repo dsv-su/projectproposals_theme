@@ -136,13 +136,14 @@
         }
         print ' (Cancelled)';
         $cancelled = true;
+        $cancelledclass = ($cancelled ? 'hidden' : '');
       } ?></h2>
     <?php endif; ?>
     <?php print render($title_suffix); ?>
 
     <!-- Node author -->
     <div class="author">
-      <?php print 'Researcher: ' . $name;
+      <?php print '<span class="field-label">Researcher: </span>' . $name;
       //print render($content['field_dsv_person_in_charge']); ?>
     </div>
 
@@ -159,7 +160,7 @@
     <!-- Editors -->
     <div class="editors">
         <?php 
-        print 'Editors: ';
+        print '<span class="field-label">Editors: </span>';
         $editors = array_unique(array_map(create_function('$o', 'return $o->uid;'), node_revision_list($node)));
 
         if (($key = array_search(1, $editors)) !== false) {
@@ -185,6 +186,19 @@
         }
         ?>
     </div>
+
+    <!-- Cancelling -->
+    <?php
+        if ($cancellable) {
+            if ($cancelled) {
+                print '<br><a href="node/cancel/' . $node->nid . '" class="cancel cancelled">
+                    <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/reload.png'.'" title="Uncancel proposal" alt="Uncancel proposal"></a>';
+            } else {
+                print '<br><a href="node/cancel/' . $node->nid . '" class="cancel">
+                    <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/cancel.png'.'" title="Cancel proposal" alt="Cancel proposal"></a>';
+            }
+        }
+    ?>
 
   </div>
 
@@ -278,48 +292,47 @@
 
             // Hide attachment to Unit head when Final attachments are uploaded.
             if (!$node->field_final_attachments['und']) {
-                print '<div class="attachments-unit">';
-                print render($content['field_attachment_unit']);
-                print '</div>';
-
-                print '<div class="comments-unit">';
-                print render($content['field_comments_to_unit_head']);
+                print '<div class="unit">';
+                    print '<div class="comments-unit">';
+                    print render($content['field_comments_to_unit_head']);
+                    print '</div>';
+                    print '<div class="attachments-unit">';
+                    print render($content['field_attachment_unit']);
+                    print '</div>';
                 print '</div>';
             }
 
-            print '<div class="attachments-dsv-economy">';
-            print render($content['field_attachment_to_dsv_economy']);
+            print '<div class="dsv-economy">';
+                print '<div class="comments-dsv-economy">';
+                print render($content['field_comments_to_dsv_economy']);
+                print '</div>';
+                print '<div class="attachments-dsv-economy">';
+                print render($content['field_attachment_to_dsv_economy']);
+                print '</div>';
             print '</div>';
 
-            print '<div class="comments-dsv-economy">';
-            print render($content['field_comments_to_dsv_economy']);
-            print '</div>';
-
-            print '<div class="attachments-vice-head">';
-            print render($content['field_attachments_to_vice_head']);
-            print '</div>';
-
-            print '<div class="comments-vice-head">';
-            print render($content['field_comments_to_vice_head']);
+            print '<div class="vice-head">';
+                print '<div class="comments-vice-head">';
+                print render($content['field_comments_to_vice_head']);
+                print '</div>';
+                print '<div class="attachments-vice-head">';
+                print render($content['field_attachments_to_vice_head']);
+                print '</div>';
             print '</div>';
 
             print '<div class="final-attachments">';
             print render($content['field_final_attachments']);
             print '</div>';
 
-        }
+        print '<span class="note">Proposal tips: it has to be approved by Unit head, after that it can be filled in with details and sent to DSV economy.</span>';
 
-        if ($cancellable) {
-            if ($cancelled) {
-                print '<br><a href="node/cancel/' . $node->nid . '" class="cancel cancelled">Uncancel proposal</a>';
-            } else {
-                print '<br><a href="node/cancel/' . $node->nid . '" class="cancel">Cancel proposal</a>';
-            }
         }
 
         print '</div>';
+
         // End of fourth row
         // -------------------------------
+
 
         // Right section
         // -------------------------------
@@ -327,52 +340,48 @@
 
         // OK from Unit head
         print '<div class="ok-from-unit-head">';
-        print '<span class="field-label">OK from Unit head: </span>';
-        //print render($content['field_ok_from_unit_head']);
-        if ($node->field_ok_from_unit_head['und'][0]['value']) {
-            print '<span class="approved">Yes</span>';
-        } else if (($admin || $unithead) && !$cancelled) {
-            print '<a href="node/approve/'.$node->nid. '" class="approve unit-head">Approve</a>';
-            print '<span class="not-approved hidden">No</span>';
-        } else {
-            print '<a href="node/approve/'.$node->nid. '" class="approve unit-head hidden">Approve</a>';
-            print '<span class="not-approved">No</span>';
-        }
+            print '<span class="field-label">OK from Unit head: </span>';
+            //print render($content['field_ok_from_unit_head']);
+            if ($node->field_ok_from_unit_head['und'][0]['value']) {
+                print '<span class="approved">Yes</span>';
+            } else if (($admin || $unithead) && !$cancelled) {
+                print '<a href="node/approve/'.$node->nid. '" class="approve unit-head">Approve</a>';
+                print '<span class="not-approved hidden">No</span>';
+            } else {
+                print '<a href="node/approve/'.$node->nid. '" class="approve unit-head hidden">Approve</a>';
+                print '<span class="not-approved">No</span>';
+            }
         print '</div>';
 
         // Request to DSV Economy
         print '<div class="request-to-dsv-economy">';
-        //print render($content['field_ok_from_dsv_economy']);
-        print '<span class="field-label">Request to DSV economy: </span>';
-
-        if ($node->field_request_to_dsv_economy['und'][0]['value']) {
-            print '<span class="approved">Sent</span>';
-        } else if (((($admin || $user->uid == $uid) && !$cancelled)
-                && $node->field_ok_from_unit_head['und'][0]['value'])) {
-            print '<span class="not-approved hidden">Not sent</span>';
-            print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy">Send</a>';
-        } else {
-            print '<span class="not-approved">Not sent</span>';
-            print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy hidden">Send</a>';
-        }
+            print '<span class="field-label">Request to DSV economy: </span>';
+            if ($node->field_request_to_dsv_economy['und'][0]['value']) {
+                print '<span class="approved">Sent</span>';
+            } else if (((($admin || $user->uid == $uid) && !$cancelled)
+                    && $node->field_ok_from_unit_head['und'][0]['value'])) {
+                print '<span class="not-approved hidden">Not sent</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy">Send</a>';
+            } else {
+                print '<span class="not-approved">Not sent</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy hidden">Send</a>';
+            }
         print '</div>';
 
         // OK from DSV Economy
         print '<div class="ok-from-dsv-economy">';
-        //print render($content['field_ok_from_dsv_economy']);
-        print '<span class="field-label">OK from DSV economy: </span>';
-
-        if ($node->field_ok_from_dsv_economy['und'][0]['value']) {
-            print '<span class="approved">Yes</span>';
-        } else if (((($admin || $economy) && !$cancelled)
-                && $node->field_ok_from_unit_head['und'][0]['value'])
-                && $node->field_request_to_dsv_economy['und'][0]['value']) {
-            print '<span class="not-approved hidden">No</span>';
-            print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy">Approve</a>';
-        } else {
-            print '<span class="not-approved">No</span>';
-            print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy hidden">Approve</a>';
-        }
+            print '<span class="field-label">OK from DSV economy: </span>';
+            if ($node->field_ok_from_dsv_economy['und'][0]['value']) {
+                print '<span class="approved">Yes</span>';
+            } else if (((($admin || $economy) && !$cancelled)
+                    && $node->field_ok_from_unit_head['und'][0]['value'])
+                    && $node->field_request_to_dsv_economy['und'][0]['value']) {
+                print '<span class="not-approved hidden">No</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy">Approve</a>';
+            } else {
+                print '<span class="not-approved">No</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy hidden">Approve</a>';
+            }
         print '</div>';
 
         // Forskningsservice informed
@@ -382,55 +391,51 @@
         // OK from Uno
 
         print '<div class="request-to-vice-head">';
-        print '<span class="field-label">Request to Asa: </span>';
-        //print render($content['field_ok_from_uno']);
-        if ($node->field_request_to_vice_head['und'][0]['value']) {
-            print '<span class="approved">Sent</span>';
-        } else if ((($admin || $user->uid == $uid) && !$cancelled)
-                && $node->field_ok_from_dsv_economy['und'][0]['value']) {
-            print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head">Send</a>';
-            print '<span class="not-approved hidden">Not sent</span>';
-        } else {
-            print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head hidden">Send</a>';
-            print '<span class="not-approved">Not sent</span>';
-        }
+            print '<span class="field-label">Request to Asa: </span>';
+            if ($node->field_request_to_vice_head['und'][0]['value']) {
+                print '<span class="approved">Sent</span>';
+            } else if ((($admin || $user->uid == $uid) && !$cancelled)
+                    && $node->field_ok_from_dsv_economy['und'][0]['value']) {
+                print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head">Send</a>';
+                print '<span class="not-approved hidden">Not sent</span>';
+            } else {
+                print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head hidden">Send</a>';
+                print '<span class="not-approved">Not sent</span>';
+            }
         print '</div>';
         
         print '<div class="ok-from-vice-head">';
-        print '<span class="field-label">OK from Asa: </span>';
-        //print render($content['field_ok_from_uno']);
-        if ($node->field_ok_from_uno['und'][0]['value']) {
-            print '<span class="approved">Yes</span>';
-        } else if ((($admin || $vicehead) && !$cancelled)
-                && $node->field_ok_from_dsv_economy['und'][0]['value']
-                && $node->field_request_to_vice_head['und'][0]['value']) {
-            print '<a href="node/approve/'.$node->nid. '" class="approve vice-head">Approve</a>';
-            print '<span class="not-approved hidden">No</span>';
-        } else {
-            print '<a href="node/approve/'.$node->nid. '" class="approve vice-head hidden">Approve</a>';
-            print '<span class="not-approved">No</span>';
-        }
+            print '<span class="field-label">OK from Asa: </span>';
+            if ($node->field_ok_from_uno['und'][0]['value']) {
+                print '<span class="approved">Yes</span>';
+            } else if ((($admin || $vicehead) && !$cancelled)
+                    && $node->field_ok_from_dsv_economy['und'][0]['value']
+                    && $node->field_request_to_vice_head['und'][0]['value']) {
+                print '<a href="node/approve/'.$node->nid. '" class="approve vice-head">Approve</a>';
+                print '<span class="not-approved hidden">No</span>';
+            } else {
+                print '<a href="node/approve/'.$node->nid. '" class="approve vice-head hidden">Approve</a>';
+                print '<span class="not-approved">No</span>';
+            }
         print '</div>';
 
-        // Sent to Birgitta
+        // Sent to Birgitta a.k.a. Final submissions
         print '<div class="final-submissions">';
-        //print render($content['field_sent_to_birgitta_o']);
-        if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
-            print '<span class="field-label">Final submission:</span> <span class="approved">Yes</span>';
-        } else {
-            print '<span class="field-label">Final submission:</span> <span class="not-approved">No</span>';
-        }
+            if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
+                print '<span class="field-label">Final submission:</span> <span class="approved">Yes</span>';
+            } else {
+                print '<span class="field-label">Final submission:</span> <span class="not-approved">No</span>';
+            }
         print '</div>';
 
         // If user has permissions to edit this node, show edit button
         if ($editable) {
-            print '<a href="node/' . $node->nid . '/edit" class="edit">Edit</a>';
+            print '<a href="node/' . $node->nid . '/edit" class="edit '.$cancelledclass.'">Edit</a>';
         }
-
 
         // This section is only for economy people.
         if ($economy || $admin) {
-            print '<br><span class="field-label">Economy owner: </span>';
+            print '<br><div class=""><span class="field-label">Economy owner: </span><span class="field-item">';
             if ($node->field_economy_owner['und'][0]['uid']) {
                 $tempuser = user_load($node->field_economy_owner['und'][0]['uid']);
                 print $tempuser->realname;
@@ -440,16 +445,13 @@
             print '</br>';
             //if ($node->field_economy_owner['und'][0]['uid']) {
                 if ($user->uid == $node->field_economy_owner['und'][0]['uid']) {
-                    print '<br><a href="node/economy-own/' . $node->nid . '" class="economy-owner owned">
-                        Unassign the proposal from me</a>';
+                    print '<br><a href="node/economy-own/' . $node->nid . '" class="economy-owner owned '.$cancelledclass.'">Unassign the proposal from me</a>';
                 } else {
-
-                    if (!$cancelled || $admin) {
-                        print '<br><a href="node/economy-own/' . $node->nid . '" class="economy-owner not-owned">
+                    print '<br><a href="node/economy-own/' . $node->nid . '" class="economy-owner not-owned '.$cancelledclass.'">
                         Assign the proposal to me</a>';
-                    }
                 }
             //}
+            print "</span></div>";
         }
 
         print '</div>';

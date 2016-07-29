@@ -14,8 +14,8 @@ jQuery( function() {
 
         this.className.replace('cancel ','');
         var target = jQuery( this ).attr( 'href' ) + '/' + action;
-        var title = jQuery( this ).parents().eq(2).children( '.proposal-header' ).children( 'h2:first' );
-        var proposaldiv = jQuery( this ).parents().eq(2);
+        var proposaldiv = jQuery( this ).parents().eq(1);
+        var title = jQuery( proposaldiv ).children( '.proposal-header' ).children( 'h2:first' );
         var nodeid = jQuery(proposaldiv).attr('id').substring(5);
 
         // Find all buttons that we need to alter depending on cancel-status.
@@ -28,28 +28,34 @@ jQuery( function() {
         }
         var firstapproved = jQuery(notapproved).parent().find( ".approve" );
 
-        var edit = jQuery( this ).parents().eq(2).find( ".edit" );
+        var edit = jQuery(proposaldiv).find( ".edit" );
+
+        var economyown = jQuery(proposaldiv).find( ".economy-owner" );
+        var imageurl = jQuery(button).children('img').attr('src').slice(0,-10);
 
         jQuery.ajax({
           url: target,
           dataType: 'json',
           success: function(data) {
             if (action == 'cancel') {
-                jQuery(title).append(' (Cancelled)');
-                jQuery(button).text('Uncancel proposal');
-                jQuery(button).addClass('cancelled');
                 jQuery(proposaldiv).fadeTo( 'slow', 0.3 );
+                jQuery(title).append(' (Cancelled)');
+                jQuery(button).children('img').attr('src', imageurl + 'reload.png');
+                jQuery(button).addClass('cancelled');
                 jQuery(approve).addClass('hidden');
                 jQuery(firstnotapproved).removeClass('hidden');
                 //jQuery(approve).replaceWith('<span class="not-approved">No</span>');
-                jQuery(edit).replaceWith('');
+                jQuery(edit).addClass('hidden');
+                jQuery(economyown).addClass('hidden');
             } else {
+                jQuery(proposaldiv).fadeTo( 'slow', 1 );
                 jQuery(title).text(function(_,txt) {return txt.slice(0, -12);});
-                jQuery(button).text('Cancel proposal');
+                jQuery(button).children('img').attr('src', imageurl + 'cancel.png');
                 jQuery(button).removeClass('cancelled');
                 jQuery(firstapproved).removeClass('hidden');
                 jQuery(notapproved).addClass('hidden');
-                jQuery(proposaldiv).fadeTo( 'slow', 1 );
+                jQuery(economyown).removeClass('hidden');
+                jQuery(edit).removeClass('hidden');
                 //jQuery(firstnotapproved).replaceWith('<a href="node/approve/' + nodeid + '" class="approve '+ approveby +'">Approve</a>');
             }
           },
