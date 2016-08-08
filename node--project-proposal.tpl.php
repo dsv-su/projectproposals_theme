@@ -91,7 +91,7 @@
   $admin = false;
   $cancelled = false;
 
-  if ($user->uid == $uid) {
+  if ($user->uid == $node->uid) {
     // User is the owner/author of this proposal
     $editable = true;
 
@@ -395,8 +395,8 @@
             print '<span class="field-label">Request to DSV economy: </span>';
             if ($node->field_request_to_dsv_economy['und'][0]['value']) {
                 print '<span class="approved">Sent</span>';
-            } else if (((($admin || $user->uid == $uid) && !$cancelled)
-                    && $node->field_ok_from_unit_head['und'][0]['value'])) {
+            } else if (($admin || $user->uid == $node->uid) && !$cancelled
+                    && $node->field_ok_from_unit_head['und'][0]['value']) {
                 // We disable request-dsv-economy button if some fields are not filled in.
                 // We probably need to clarify which fields are mandatory.
                 if (!$node->field_attachment_to_dsv_economy['und']) {
@@ -415,8 +415,8 @@
             print '<span class="field-label">OK from DSV economy: </span>';
             if ($node->field_ok_from_dsv_economy['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
-            } else if (((($admin || $economy) && !$cancelled)
-                    && $node->field_ok_from_unit_head['und'][0]['value'])
+            } else if (($admin || $economy) && !$cancelled
+                    && $node->field_ok_from_unit_head['und'][0]['value']
                     && $node->field_request_to_dsv_economy['und'][0]['value']) {
                 print '<span class="not-approved hidden">No</span>';
                 print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy">Approve</a>';
@@ -436,7 +436,7 @@
             print '<span class="field-label">Request to Asa: </span>';
             if ($node->field_request_to_vice_head['und'][0]['value']) {
                 print '<span class="approved">Sent</span>';
-            } else if ((($admin || $user->uid == $uid) && !$cancelled)
+            } else if (($admin || $user->uid == $node->uid) && !$cancelled
                     && $node->field_ok_from_dsv_economy['und'][0]['value']) {
                 print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head">Send</a>';
                 print '<span class="not-approved hidden">Not sent</span>';
@@ -450,7 +450,7 @@
             print '<span class="field-label">OK from Asa: </span>';
             if ($node->field_ok_from_uno['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
-            } else if ((($admin || $vicehead) && !$cancelled)
+            } else if (($admin || $vicehead) && !$cancelled
                     && $node->field_ok_from_dsv_economy['und'][0]['value']
                     && $node->field_request_to_vice_head['und'][0]['value']) {
                 print '<a href="node/approve/'.$node->nid. '" class="approve vice-head">Approve</a>';
