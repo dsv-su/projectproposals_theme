@@ -41,16 +41,21 @@ jQuery( function() {
                 jQuery(proposaldiv).fadeTo( 'slow', 0.3 );
                 jQuery(title).append(' (Cancelled)');
                 jQuery(button).children('img').attr('src', imageurl + 'reload.png');
+                jQuery(button).children('img').attr('alt', 'Uncancel this proposal');
+                jQuery(button).children('img').attr('title', 'Uncancel this proposal');
                 jQuery(button).addClass('cancelled');
                 jQuery(approve).addClass('hidden');
                 jQuery(firstnotapproved).removeClass('hidden');
                 //jQuery(approve).replaceWith('<span class="not-approved">No</span>');
                 jQuery(edit).addClass('hidden');
-                jQuery(economyown).addClass('hidden');
+                jQuery(economyown).addClass('hidden')
+                jQuery(proposaldiv).find( ".fourth-row" ).children().hide();
             } else {
                 jQuery(proposaldiv).fadeTo( 'slow', 1 );
                 jQuery(title).text(function(_,txt) {return txt.slice(0, -12);});
                 jQuery(button).children('img').attr('src', imageurl + 'cancel.png');
+                jQuery(button).children('img').attr('alt', 'Cancel this proposal');
+                jQuery(button).children('img').attr('title', 'Cancel this proposal');
                 jQuery(button).removeClass('cancelled');
                 jQuery(firstapproved).removeClass('hidden');
                 jQuery(notapproved).addClass('hidden');

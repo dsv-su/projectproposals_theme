@@ -158,6 +158,7 @@
     </div>
 
     <!-- Editors -->
+    <!--
     <div class="editors">
         <?php 
         print '<span class="field-label">Editors: </span>';
@@ -186,18 +187,54 @@
         }
         ?>
     </div>
+    -->
+    <!-- This section is only for economy people. -->
+    <div class="owner">
+        <span class="field-label">Economy owner: </span>
+        <span class="field-item">
+        <?php
+            if ($node->field_economy_owner['und'][0]['uid']) {
+                $tempuser = user_load($node->field_economy_owner['und'][0]['uid']);
+                print $tempuser->realname;
+            } else {
+                print 'not yet assigned';
+            }
+           // print '</br>';
+           /* if ($economy || $admin) {
+                if ($user->uid == $node->field_economy_owner['und'][0]['uid']) {
+                    print '<br><a href="node/economy-own/' . $node->nid . '" class="economy-owner owned '.$cancelledclass.'">Unassign the proposal from me</a>';
+                } else {
+                    print '<br><a href="node/economy-own/' . $node->nid . '" class="economy-owner not-owned '.$cancelledclass.'"> Assign the proposal to me</a>';
+                }
+            }*/
+        ?>
+        </span>
+    </div>
+
 
     <!-- Cancelling -->
     <?php
         if ($cancellable) {
             if ($cancelled) {
                 print '<br><a href="node/cancel/' . $node->nid . '" class="cancel cancelled">
-                    <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/reload.png'.'" title="Uncancel proposal" alt="Uncancel proposal"></a>';
+                    <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/reload.png'.'" title="Uncancel proposal" alt="Uncancel this proposal"></a>';
             } else {
                 print '<br><a href="node/cancel/' . $node->nid . '" class="cancel">
-                    <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/cancel.png'.'" title="Cancel proposal" alt="Cancel proposal"></a>';
+                    <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/cancel.png'.'" title="Cancel proposal" alt="Cancel this proposal"></a>';
             }
         }
+    ?>
+
+    <?php
+    if ($economy || $admin) {
+        if ($user->uid !== $node->field_economy_owner['und'][0]['uid']) {
+            print '<a href="node/economy-own/' . $node->nid . '" class="economy-owner not-owned '. $cancelledclass .'">
+                <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/user-include.png'.'" title="Assign the proposal to me" alt="Assign the proposal to me"></a>';
+            } else {
+                print '<a href="node/economy-own/' . $node->nid . '" class="economy-owner owned '. $cancelledclass .'">
+                    <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/user-exclude.png'.'" title="Unassign the proposal from the current economy person" alt="Unassign the proposal from the current economy person"></a>';
+            }
+    } 
     ?>
 
   </div>
@@ -360,11 +397,16 @@
                 print '<span class="approved">Sent</span>';
             } else if (((($admin || $user->uid == $uid) && !$cancelled)
                     && $node->field_ok_from_unit_head['und'][0]['value'])) {
+                // We disable request-dsv-economy button if some fields are not filled in.
+                // We probably need to clarify which fields are mandatory.
+                if (!$node->field_attachment_to_dsv_economy['und']) {
+                    $disabledclass = ' disabled';
+                }
                 print '<span class="not-approved hidden">Not sent</span>';
-                print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy">Send</a>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy'.$disabledclass.'">Send</a>';
             } else {
                 print '<span class="not-approved">Not sent</span>';
-                print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy hidden">Send</a>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy hidden'.$disabledclass.'">Send</a>';
             }
         print '</div>';
 
@@ -431,27 +473,6 @@
         // If user has permissions to edit this node, show edit button
         if ($editable) {
             print '<a href="node/' . $node->nid . '/edit" class="edit '.$cancelledclass.'">Edit</a>';
-        }
-
-        // This section is only for economy people.
-        if ($economy || $admin) {
-            print '<br><div class=""><span class="field-label">Economy owner: </span><span class="field-item">';
-            if ($node->field_economy_owner['und'][0]['uid']) {
-                $tempuser = user_load($node->field_economy_owner['und'][0]['uid']);
-                print $tempuser->realname;
-            } else {
-                print 'not yet assigned';
-            }
-            print '</br>';
-            //if ($node->field_economy_owner['und'][0]['uid']) {
-                if ($user->uid == $node->field_economy_owner['und'][0]['uid']) {
-                    print '<br><a href="node/economy-own/' . $node->nid . '" class="economy-owner owned '.$cancelledclass.'">Unassign the proposal from me</a>';
-                } else {
-                    print '<br><a href="node/economy-own/' . $node->nid . '" class="economy-owner not-owned '.$cancelledclass.'">
-                        Assign the proposal to me</a>';
-                }
-            //}
-            print "</span></div>";
         }
 
         print '</div>';

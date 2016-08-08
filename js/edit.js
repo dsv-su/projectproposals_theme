@@ -6,6 +6,11 @@ jQuery( function() {
     var button = this;
     var confirmmessage = "Are you sure you want to approve this proposal?";
 
+    if (jQuery(button).hasClass('disabled')) {
+      alert('You need to complete your proposal before sending it to DSV economy.');
+      return false;
+    }
+
     if (confirm(confirmmessage)) {
       jQuery.ajax({
         url: target,

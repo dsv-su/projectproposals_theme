@@ -66,7 +66,8 @@ div.main-container div.proposal div.proposal-header > h2 {
 div.main-container div.proposal div.proposal-header > div.author,
 div.main-container div.proposal div.proposal-header > div.deadline,
 div.main-container div.proposal div.proposal-header > div.duration,
-div.main-container div.proposal div.proposal-header > div.editors {
+div.main-container div.proposal div.proposal-header > div.editors,
+div.main-container div.proposal div.proposal-header > div.owner {
   display: inline-block;
   position: relative;
 }
@@ -76,7 +77,9 @@ div.main-container div.proposal div.proposal-header > div.author {
 }
 
 div.main-container div.proposal div.proposal-header > div.deadline,
-div.main-container div.proposal div.proposal-header > div.duration {
+div.main-container div.proposal div.proposal-header > div.duration,
+div.main-container div.proposal div.proposal-header > div.owner
+ {
   width: 24%;
 }
 
@@ -231,7 +234,7 @@ div.main-container div.proposal div.content > div.fourth-row,
 }
 
 div.main-container div.proposal div.content > div.fourth-row {
-  min-height: 97px;
+  min-height: 24px;
 }
 
 /* This sets up proper widths for the fields in the first row */
@@ -337,9 +340,14 @@ div.main-container div.proposal .right-section a:hover {
 
 a.economy-owner {
   position: absolute;
-  bottom: 3px;
-  right: 5px;
-  color: #005b7f;
+  right: -22px;
+  top: 41px;
+}
+
+a.economy-owner img {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
 }
 
 a.cancel {
@@ -352,6 +360,10 @@ a.cancel img {
   width: 18px;
   height: 18px;
   cursor: pointer;
+}
+
+a.cancel:not(.cancelled) {
+  opacity: 0.7;
 }
 
 a.economy-owner:visited,
