@@ -6,6 +6,14 @@ jQuery( function() {
     var button = this;
     var confirmmessage = "Are you sure you want to approve this proposal?";
 
+    if (approveby == 'request-dsv-economy') {
+      confirmmessage = "Are you sure you want to send this proposal to DSV economy? Ensure that you have filled in all neccessary information.";
+    }
+
+    if (approveby == 'request-vice-head') {
+      confirmmessage = "Are you sure you want to send this proposal to Asa Smedberg? Ensure that you have filled in all neccessary information.";
+    }
+
     if (jQuery(button).hasClass('disabled')) {
       alert('You need to complete your proposal before sending it to DSV economy.');
       return false;
