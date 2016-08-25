@@ -25,9 +25,9 @@
 }
 
 /* Hide 'Remove' button from file picker */
-.hide-remove-button #edit-field-attachment-to-dsv-economy-und-0-remove-button,
-.hide-remove-button #edit-field-attachments-to-vice-head-und-0-remove-button
- {
+.hide-remove-button[id="edit-field-attachment-to-dsv-economy"] button[value='Remove'],
+.hide-remove-button[id="edit-field-attachments-to-vice-head"] button[value='Remove']
+{
   display: none;
 }
 

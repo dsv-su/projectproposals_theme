@@ -14,8 +14,12 @@ jQuery( function() {
       confirmmessage = "Are you sure you want to send this proposal to Asa Smedberg? Ensure that you have filled in all neccessary information.";
     }
 
+    if (approveby == 'final') {
+      confirmmessage = "Do you confirm that you have sent the files to registrator?";
+    }
+
     if (jQuery(button).hasClass('disabled')) {
-      alert('You need to complete your proposal before sending it to DSV economy.');
+      alert('You need to complete your proposal by uploading attachments before sending.');
       return false;
     }
 
@@ -25,7 +29,7 @@ jQuery( function() {
         dataType: 'json',
         success: function(data) {
           //jQuery(button).parent().find( '.ok-from-' + approveby ).find('.field-item').text( "Yes");
-          if (approveby == 'request-dsv-economy' || approveby == 'request-vice-head') {
+          if (approveby == 'request-dsv-economy' || approveby == 'request-vice-head' || approveby == 'final') {
             jQuery(button).text('Sent');
           } else {
             jQuery(button).text('Yes');

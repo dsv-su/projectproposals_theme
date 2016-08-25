@@ -408,6 +408,10 @@
                 print '<span class="not-approved">Not sent</span>';
                 print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy hidden'.$disabledclass.'">Send</a>';
             }
+            // Economy people shouldn't edit proposals until they're requested to.
+            if ($economy & !$node->field_request_to_dsv_economy['und'][0]['value']) {
+                $editable = false;
+            }
         print '</div>';
 
         // OK from DSV Economy
@@ -433,21 +437,24 @@
         // OK from Uno
 
         print '<div class="request-to-vice-head">';
-            print '<span class="field-label">Request to Asa: </span>';
+            print '<span class="field-label">Request to Åsa: </span>';
             if ($node->field_request_to_vice_head['und'][0]['value']) {
                 print '<span class="approved">Sent</span>';
             } else if (($admin || $user->uid == $node->uid) && !$cancelled
                     && $node->field_ok_from_dsv_economy['und'][0]['value']) {
-                print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head">Send</a>';
+                if (!$node->field_attachments_to_vice_head['und']) {
+                    $disabledclass = ' disabled';
+                }
+                print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head'.$disabledclass.'">Send</a>';
                 print '<span class="not-approved hidden">Not sent</span>';
             } else {
-                print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head hidden">Send</a>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head'.$disabledclass.' hidden">Send</a>';
                 print '<span class="not-approved">Not sent</span>';
             }
         print '</div>';
         
         print '<div class="ok-from-vice-head">';
-            print '<span class="field-label">OK from Asa: </span>';
+            print '<span class="field-label">OK from Åsa: </span>';
             if ($node->field_ok_from_uno['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
             } else if (($admin || $vicehead) && !$cancelled
@@ -463,10 +470,15 @@
 
         // Sent to Birgitta a.k.a. Final submissions
         print '<div class="final-submissions">';
+            print '<span class="field-label">Final submission: </span>';
             if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
-                print '<span class="field-label">Final submission:</span> <span class="approved">Yes</span>';
+                print '<span class="approved">Sent</span>';
+            } else if (true) {
+                print '<a href="node/approve/'.$node->nid. '" class="approve final">Sent</a>';
+                print '<span class="not-approved hidden">Not sent</span>';
             } else {
-                print '<span class="field-label">Final submission:</span> <span class="not-approved">No</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve final hidden">Sent</a>';
+                print '<span class="not-approved">Not sent</span>';
             }
         print '</div>';
 
