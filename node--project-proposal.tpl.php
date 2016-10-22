@@ -109,7 +109,7 @@
     // User is the institution secretary
     $editable = true;
 
-  } else if (isset($user->roles[7]) && isset($node->field_unit_head['und'][0]['value']) && $user->uid == $node->field_unit_head['und'][0]['value']->uid) {
+  } else if (isset($user->roles[7]) && isset($node->field_unit_head['und'][0]['uid']) && $user->uid == $node->field_unit_head['und'][0]['uid']) {
     // User is the unit head
     $editable = true;
     $unithead = true;
