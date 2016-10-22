@@ -25,8 +25,7 @@
 }
 
 /* Hide 'Remove' button from file picker */
-.hide-remove-button[id="edit-field-attachment-to-dsv-economy"] button[value='Remove'],
-.hide-remove-button[id="edit-field-attachments-to-vice-head"] button[value='Remove']
+.hide-remove-button[id="edit-field-attachments"] button[value='Remove']
 {
   display: none;
 }
@@ -206,7 +205,6 @@ div.main-container div.proposal div.content div.field p {
 
 div.main-container div.proposal div.content > div.first-row,
 div.main-container div.proposal div.content > div.third-row,
-div.main-container div.proposal div.content > div.fifth-row,
 #edit-first-row,
 #edit-third-row {
   background-color: #f5f5f5;
@@ -262,20 +260,14 @@ div.main-container div.proposal .budget-amount-dsv {
 }
 
 /* This sets up proper widths for the fields in the fourth row */
-div.main-container div.proposal div.fourth-row .unit,
-div.main-container div.proposal div.fourth-row .dsv-economy,
-div.main-container div.proposal div.fourth-row .vice-head,
-div.main-container div.proposal div.fourth-row .final-attachments {
+div.main-container div.proposal div.fourth-row .comment {
   display: inline-block;
   vertical-align: top;
-  width: 33%;
+  width: 66%;
 }
-
-/* This sets up proper widths for the fields in the fifth row */
-div.main-container div.proposal div.fifth-row .comments-unit,
-div.main-container div.proposal div.fifth-row .comments-dsv-economy,
-div.main-container div.proposal div.fifth-row .comments-vice-head {
+div.main-container div.proposal div.fourth-row .attachments {
   display: inline-block;
+  vertical-align: top;
   width: 33%;
 }
 
@@ -506,4 +498,8 @@ a.cancel:visited {
   position: absolute;
   bottom: 3px;
   left: 5px;
+}
+
+.body {
+  font-size: 14px;
 }
