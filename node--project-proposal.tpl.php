@@ -83,6 +83,7 @@
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes; if ($node->field_cancelled['und'][0]['value']) { print ' dimmed';} ?> clearfix"<?php print $attributes; ?>>
 
   <?php
+
   // Find out if user can edit this proposal
   $editable = false;
   $economy = false;
@@ -90,6 +91,7 @@
   $vicehead = false;
   $admin = false;
   $cancelled = false;
+  $secretary = false;
 
   if ($user->uid == $node->uid) {
     // User is the owner/author of this proposal
@@ -107,6 +109,7 @@
 
   } else if (isset($user->roles[6])) {
     // User is the institution secretary
+    $secretary = true;
     $editable = true;
 
   } else if (isset($user->roles[7]) && isset($node->field_unit_head['und'][0]['uid']) && $user->uid == $node->field_unit_head['und'][0]['uid']) {
@@ -119,7 +122,6 @@
     $economy = true;
     $editable = true;
   }
-
   $cancellable = true;
   if (!$editable) {
     $cancellable = false;
@@ -339,11 +341,9 @@ $lasteditor = user_load(array_values($editors)[0]);
 
         // Fourth row
         // -------------------------------
-        print '<div class="fourth-row">';
-
         // We only show Attachments/Comments for authors or editors.
         if ($editable) {
-
+        print '<div class="fourth-row">';
             print '<div class="comment">';
             print render($content['field_comment']);
             print '</div>';
@@ -354,10 +354,8 @@ $lasteditor = user_load(array_values($editors)[0]);
 
     //    print '<span class="note">Proposal tips: it has to be approved by Unit head, after that it can be filled in with details and sent to DSV economy.</span>';
 
-        }
-
         print '</div>';
-
+        }
         // End of fourth row
         // -------------------------------
 
@@ -458,7 +456,7 @@ $lasteditor = user_load(array_values($editors)[0]);
             print '<span class="field-label">Final submission: </span>';
             if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
                 print '<span class="approved">Sent</span>';
-            } else if (($admin || $user->uid == $node->uid || $economy || $unithead) && !$cancelled) {
+            } else if (($admin || $secretary) && !$cancelled) {
                 print '<a href="node/approve/'.$node->nid. '" class="approve final">Send</a>';
                 print '<span class="not-approved hidden">Not sent</span>';
             } else {
