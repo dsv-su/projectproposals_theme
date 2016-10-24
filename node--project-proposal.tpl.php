@@ -79,10 +79,6 @@
  *
  * @ingroup themeable
  */
-?>
-<div id="node-<?php print $node->nid; ?>" class="<?php print $classes; if ($node->field_cancelled['und'][0]['value']) { print ' dimmed';} ?> clearfix"<?php print $attributes; ?>>
-
-  <?php
 
   // Find out if user can edit this proposal
   $editable = false;
@@ -126,7 +122,30 @@
   if (!$editable) {
     $cancellable = false;
   }
-  ?>
+
+    $last_two_logins = db_query("SELECT login, hostname, one_time
+                   FROM {login_history}
+                   WHERE uid = :uid
+                   ORDER BY login DESC
+                   LIMIT 2", array(':uid' => $user->uid))->fetchAll();
+    if (!isset($last_two_logins[1])) {
+        $lastlogin = $last_two_logins[0]->login;
+    } else {
+        $lastlogin = $last_two_logins[1]->login;
+    }
+    $new = false;
+    $lastrevision = array_values(node_revision_list($node))[0];
+    $lasteditor = user_load($lastrevision->uid);
+    //var_dump($lastrevision->timestamp);
+    //var_dump($lastlogin);
+    if ($lastrevision->timestamp >= $lastlogin && $editable && $lasteditor->uid <> $user->uid) {
+        $new = true;
+    }
+?>
+<div id="node-<?php print $node->nid; ?>" class="<?php print $classes;
+    if ($node->field_cancelled['und'][0]['value']) { print ' dimmed';} 
+    if ($new) { print ' updatesavailable';}
+    ?> clearfix"<?php print $attributes; ?>>
 
   <div class="proposal-header">
     <?php print render($title_prefix); ?>
@@ -140,6 +159,9 @@
         $cancelled = true;
         $cancelledclass = ($cancelled ? 'hidden' : '');
       } else {
+        if ($new) {
+            print ' (Updated)';
+        }
         $cancelledclass = '';
       }?></h2>
     <?php endif; ?>
@@ -147,7 +169,7 @@
 
     <!-- Node author -->
     <div class="author">
-      <?php print '<span class="field-label">Researcher: </span>' . $name;
+      <?php print '<span class="field-label">Researcher: </span>' . $node->field_dsv_person_in_charge['und'][0]['user']->realname;
       //print render($content['field_dsv_person_in_charge']); ?>
     </div>
 
@@ -482,8 +504,6 @@ $lasteditor = user_load(array_values($editors)[0]);
 
   <?php print render($content['comments']); ?>
   <?php 
-    $lastrevision = array_values(node_revision_list($node))[0];
-    $lasteditor = user_load($lasteditor->uid);
     print '<span class="lastedited">Last edited by ' . $lasteditor->realname . ' on ' . format_date($lastrevision->timestamp, 'utan_tider').'</span>';
   ?>
 
