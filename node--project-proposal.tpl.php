@@ -219,6 +219,7 @@
     <!-- Cancelling -->
     <?php
 
+//TO CLEAN UP!
 $editors = array_map(create_function('$o', 'return $o->uid;'), node_revision_list($node));
 $lasteditor = user_load(array_values($editors)[0]);
   if ($lasteditor->uid == $node->uid) {
@@ -480,5 +481,10 @@ $lasteditor = user_load(array_values($editors)[0]);
   <?php print render($content['links']); ?>
 
   <?php print render($content['comments']); ?>
+  <?php 
+    $lastrevision = array_values(node_revision_list($node))[0];
+    $lasteditor = user_load($lasteditor->uid);
+    print '<span class="lastedited">Last edited by ' . $lasteditor->realname . ' on ' . format_date($lastrevision->timestamp, 'utan_tider').'</span>';
+  ?>
 
 </div>
