@@ -128,6 +128,7 @@
                    WHERE uid = :uid
                    ORDER BY login DESC
                    LIMIT 2", array(':uid' => $user->uid))->fetchAll();
+    var_dump($last_two_logins);
     if (!isset($last_two_logins[1])) {
         $lastlogin = $last_two_logins[0]->login;
     } else {
@@ -431,14 +432,18 @@ $lasteditor = user_load(array_values($editors)[0]);
         // OK from DSV Economy
         print '<div class="ok-from-dsv-economy">';
             print '<span class="field-label">OK from DSV economy: </span>';
+            $haspermission = '';
+            if ($admin || $economy) {
+                $haspermission = ' haspermission';
+            }
             if ($node->field_ok_from_dsv_economy['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
-            } else if (($admin || $economy) && !$cancelled) {
-                print '<span class="not-approved hidden">No</span>';
-                print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy">Approve</a>';
+            } else if  (!$cancelled) {
+                print '<span class="not-approved hidden'.$haspermission.'">No</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy'.$haspermission.'">Approve</a>';
             } else {
-                print '<span class="not-approved">No</span>';
-                print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy hidden">Approve</a>';
+                print '<span class="not-approved'.$haspermission.'">No</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy hidden'.$haspermission.'">Approve</a>';
             }
         print '</div>';
 
@@ -450,41 +455,53 @@ $lasteditor = user_load(array_values($editors)[0]);
 
         print '<div class="request-to-vice-head">';
             print '<span class="field-label">Request to Åsa: </span>';
+            $haspermission = '';
+            if ($admin || $user->uid == $node->uid || $economy || $unithead) {
+                $haspermission = ' haspermission';
+            }
             if (isset($node->field_request_to_vice_head['und'][0]['value']) && $node->field_request_to_vice_head['und'][0]['value']) {
                 print '<span class="approved">Sent</span>';
-            } else if (($admin || $user->uid == $node->uid || $economy || $unithead) && !$cancelled) {
-                print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head">Send</a>';
-                print '<span class="not-approved hidden">Not sent</span>';
+            } else if (!$cancelled) {
+                print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head'.$haspermission.'">Send</a>';
+                print '<span class="not-approved hidden'.$haspermission.'">Not sent</span>';
             } else {
-                print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head hidden">Send</a>';
-                print '<span class="not-approved">Not sent</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve request-vice-head hidden'.$haspermission.'">Send</a>';
+                print '<span class="not-approved'.$haspermission.'">Not sent</span>';
             }
         print '</div>';
         
         print '<div class="ok-from-vice-head">';
             print '<span class="field-label">OK from Åsa: </span>';
+            $haspermission = '';
+            if ($admin || $vicehead) {
+                $haspermission = ' haspermission';
+            }
             if ($node->field_ok_from_uno['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
             } else if (($admin || $vicehead) && !$cancelled) {
-                print '<a href="node/approve/'.$node->nid. '" class="approve vice-head">Approve</a>';
-                print '<span class="not-approved hidden">No</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve vice-head'.$haspermission.'">Approve</a>';
+                print '<span class="not-approved hidden'.$haspermission.'">No</span>';
             } else {
-                print '<a href="node/approve/'.$node->nid. '" class="approve vice-head hidden">Approve</a>';
-                print '<span class="not-approved">No</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve vice-head hidden'.$haspermission.'">Approve</a>';
+                print '<span class="not-approved'.$haspermission.'">No</span>';
             }
         print '</div>';
 
         // Sent to Birgitta a.k.a. Final submissions
         print '<div class="final-submissions">';
             print '<span class="field-label">Final submission: </span>';
+            $haspermission = '';
+            if ($admin || $vicehead) {
+                $haspermission = ' haspermission';
+            }
             if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
                 print '<span class="approved">Sent</span>';
             } else if (($admin || $secretary) && !$cancelled) {
-                print '<a href="node/approve/'.$node->nid. '" class="approve final">Send</a>';
-                print '<span class="not-approved hidden">Not sent</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve final'.$haspermission.'">Send</a>';
+                print '<span class="not-approved hidden'.$haspermission.'">Not sent</span>';
             } else {
-                print '<a href="node/approve/'.$node->nid. '" class="approve final hidden">Sent</a>';
-                print '<span class="not-approved">Not sent</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve final hidden'.$haspermission.'">Sent</a>';
+                print '<span class="not-approved'.$haspermission.'">Not sent</span>';
             }
         print '</div>';
 
