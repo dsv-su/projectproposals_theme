@@ -80,6 +80,8 @@
  * @ingroup themeable
  */
 
+  global $base_url;
+
   // Find out if user can edit this proposal
   $editable = false;
   $economy = false;
@@ -128,7 +130,6 @@
                    WHERE uid = :uid
                    ORDER BY login DESC
                    LIMIT 2", array(':uid' => $user->uid))->fetchAll();
-    var_dump($last_two_logins);
     if (!isset($last_two_logins[1])) {
         $lastlogin = $last_two_logins[0]->login;
     } else {
@@ -137,8 +138,7 @@
     $new = false;
     $lastrevision = array_values(node_revision_list($node))[0];
     $lasteditor = user_load($lastrevision->uid);
-    //var_dump($lastrevision->timestamp);
-    //var_dump($lastlogin);
+
     if ($lastrevision->timestamp >= $lastlogin && $editable && $lasteditor->uid <> $user->uid) {
         $new = true;
     }
@@ -260,22 +260,23 @@ $lasteditor = user_load(array_values($editors)[0]);
         if ($cancellable) {
             if ($cancelled) {
                 print '<br><a href="node/cancel/' . $node->nid . '" class="cancel cancelled">
-                    <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/reload.png'.'" title="Uncancel proposal" alt="Uncancel this proposal"></a>';
+                    <img src="'.$base_url.'/'.drupal_get_path('theme', 'projectproposals_theme').'/images/reload.png'.'" title="Uncancel proposal" alt="Uncancel this proposal"></a>';
             } else {
                 print '<br><a href="node/cancel/' . $node->nid . '" class="cancel">
-                    <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/cancel.png'.'" title="Cancel proposal" alt="Cancel this proposal"></a>';
+                    <img src="'.$base_url.'/'.drupal_get_path('theme', 'projectproposals_theme').'/images/cancel.png'.'" title="Cancel proposal" alt="Cancel this proposal"></a>';
             }
         }
     ?>
 
     <?php
+
     if ($economy || $admin) {
         if (!isset($node->field_economy_owner['und'][0]['uid']) || $user->uid !== $node->field_economy_owner['und'][0]['uid']) {
             print '<a href="node/economy-own/' . $node->nid . '" class="economy-owner not-owned '. $cancelledclass .'">
-                <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/user-include.png'.'" title="Assign the proposal to me" alt="Assign the proposal to me"></a>';
+                <img src="'.$base_url.'/'.drupal_get_path('theme', 'projectproposals_theme').'/images/user-include.png'.'" title="Assign the proposal to me" alt="Assign the proposal to me"></a>';
             } else {
                 print '<a href="node/economy-own/' . $node->nid . '" class="economy-owner owned '. $cancelledclass .'">
-                    <img src="'.drupal_get_path('theme', 'projectproposals_theme').'/images/user-exclude.png'.'" title="Unassign the proposal from the current economy person" alt="Unassign the proposal from the current economy person"></a>';
+                    <img src="'.$base_url.'/'.drupal_get_path('theme', 'projectproposals_theme').'/images/user-exclude.png'.'" title="Unassign the proposal from the current economy person" alt="Unassign the proposal from the current economy person"></a>';
             }
     } 
     ?>
