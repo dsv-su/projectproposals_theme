@@ -170,7 +170,19 @@
 
     <!-- Node author -->
     <div class="author">
-      <?php print '<span class="field-label">Researcher: </span>' . $node->field_dsv_person_in_charge['und'][0]['user']->realname;
+      <?php print '<span class="field-label">Main researcher: </span>' . $node->field_dsv_person_in_charge['und'][0]['user']->realname;
+      if (!isset($node->field_coapplicants['und'])) {
+
+      } elseif (count($node->field_coapplicants['und'])>1) {
+        $lastcoapplicant = end($node->field_coapplicants['und']);
+        print '<br><span class="field-label">Co-applicants: </span>';
+        foreach ($node->field_coapplicants['und'] as $key => $applicant) {
+            print user_load($applicant['uid'])->realname;
+            if ($applicant['uid'] !== $lastcoapplicant['uid']) { print ', '; }
+        }
+      } elseif (count($node->field_coapplicants['und']) == 1) {
+        print '<br><span class="field-label">Co-applicant: </span>'.user_load($node->field_coapplicants['und'][0]['uid'])->realname;;
+      }
       //print render($content['field_dsv_person_in_charge']); ?>
     </div>
 
@@ -455,7 +467,7 @@ $lasteditor = user_load(array_values($editors)[0]);
         // OK from Uno
 
         print '<div class="request-to-vice-head">';
-            print '<span class="field-label">Request to Åsa: </span>';
+            print '<span class="field-label">Request to Vice head: </span>';
             $haspermission = '';
             if ($admin || $user->uid == $node->uid || $economy || $unithead) {
                 $haspermission = ' haspermission';
@@ -472,7 +484,7 @@ $lasteditor = user_load(array_values($editors)[0]);
         print '</div>';
         
         print '<div class="ok-from-vice-head">';
-            print '<span class="field-label">OK from Åsa: </span>';
+            print '<span class="field-label">OK from Vice head: </span>';
             $haspermission = '';
             if ($admin || $vicehead) {
                 $haspermission = ' haspermission';
