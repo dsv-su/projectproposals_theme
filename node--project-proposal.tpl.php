@@ -315,9 +315,9 @@ $lasteditor = user_load(array_values($editors)[0]);
         print render($content['field_other_coordinator']);
         print '</div>';
 
-        // Program/Call/Target
-        print '<div class="program-call-target">';
-        print render($content['field_program_call_target']);
+        // Coapplicatns
+        print '<div class="coapplicants">';
+        print render($content['field_coapplicants']);
         print '</div>';
 
         print '</div>';
@@ -329,15 +329,25 @@ $lasteditor = user_load(array_values($editors)[0]);
         // -------------------------------
         print '<div class="second-row">';
 
-        // Co-financing needed
-        print '<div class="cofinancing-needed">';
+        // Program/Call/Target
+        print '<div class="program-call-target">';
+        print render($content['field_program_call_target']);
+        print '</div>';
+
+        // Co-financing
+        if (!empty($node->field_co_financing_covered_by['und'][0]['value'])) {
+            $content['field_co_financing_needed']['#title'] = "Co-financing";
+            $content['field_co_financing_needed'][0]["#markup"] .= ", covered by " . $node->field_co_financing_covered_by['und'][0]['value'];
+        }
+
+        print '<div class="cofinancing">';
         print render($content['field_co_financing_needed']);
         print '</div>';
 
         // Co-financing covered by
-        print '<div class="cofinancing-covered-by">';
-        print render($content['field_co_financing_covered_by']);
-        print '</div>';
+        // print '<div class="cofinancing-covered-by">';
+        // print render($content['field_co_financing_covered_by']);
+        // print '</div>';
 
         // OH costs covered
         print '<div class="oh-costs-covered">';

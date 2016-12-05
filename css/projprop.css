@@ -242,14 +242,14 @@ div.main-container div.proposal div.content > div.fourth-row {
 /* This sets up proper widths for the fields in the first row */
 div.main-container div.proposal .dsv-coordinating,
 div.main-container div.proposal .other-coordinator,
-div.main-container div.proposal .program-call-target {
+div.main-container div.proposal .coapplicants {
   display: inline-block;
   width: 33%;
 }
 
 /* This sets up proper widths for the fields in the second row */
-div.main-container div.proposal .cofinancing-needed,
-div.main-container div.proposal .cofinancing-covered-by,
+div.main-container div.proposal .program-call-target,
+div.main-container div.proposal .cofinancing,
 div.main-container div.proposal .oh-costs-covered {
   display: inline-block;
   width: 33%;
