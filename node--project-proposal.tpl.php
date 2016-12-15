@@ -170,20 +170,7 @@
 
     <!-- Node author -->
     <div class="author">
-      <?php print '<span class="field-label">Main researcher: </span>' . $node->field_dsv_person_in_charge['und'][0]['user']->realname;
-      if (!isset($node->field_coapplicants['und'])) {
-
-      } elseif (count($node->field_coapplicants['und'])>1) {
-        $lastcoapplicant = end($node->field_coapplicants['und']);
-        print '<br><span class="field-label">Co-applicants: </span>';
-        foreach ($node->field_coapplicants['und'] as $key => $applicant) {
-            print user_load($applicant['uid'])->realname;
-            if ($applicant['uid'] !== $lastcoapplicant['uid']) { print ', '; }
-        }
-      } elseif (count($node->field_coapplicants['und']) == 1) {
-        print '<br><span class="field-label">Co-applicant: </span>'.user_load($node->field_coapplicants['und'][0]['uid'])->realname;;
-      }
-      //print render($content['field_dsv_person_in_charge']); ?>
+      <?php print '<span class="field-label">Main researcher: </span>' . $node->field_dsv_person_in_charge['und'][0]['user']->realname;?>
     </div>
 
     <!-- Deadline -->
@@ -520,20 +507,40 @@ $lasteditor = user_load(array_values($editors)[0]);
             if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
                 print '<span class="approved">Sent</span>';
             } else if (($admin || $secretary) && !$cancelled) {
-                print '<a href="node/approve/'.$node->nid. '" class="approve final'.$haspermission.'">Send</a>';
+                print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final'.$haspermission.'">Send</a>';
                 print '<span class="not-approved hidden'.$haspermission.'">Not sent</span>';
             } else {
-                print '<a href="node/approve/'.$node->nid. '" class="approve final hidden'.$haspermission.'">Sent</a>';
+                print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final hidden'.$haspermission.'">Sent</a>';
                 print '<span class="not-approved'.$haspermission.'">Not sent</span>';
             }
         print '</div>';
 
-        // If user has permissions to edit this node, show edit button
-        if ($editable) {
-            print '<a href="node/' . $node->nid . '/edit" class="edit '.$cancelledclass.'">Edit</a>';
-        }
+        // Final approval
+        print '<div class="approved-funding">';
+            print '<span class="field-label">Proposal funds approved: </span>';
+            $haspermission = '';
+            if ($admin || $vicehead) {
+                $haspermission = ' haspermission';
+            }
+            if ($node->field_approved_funding['und'][0]['value'] === "1") {
+                print '<span class="approved">Yes</span>';
+            } else if ($node->field_approved_funding['und'][0]['value'] === "0") {
+                print '<span class="not-approved">No</span>';
+            } else if (($admin || $vicehead || $user->uid == $node->uid) && !$cancelled) {
+                print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-yes'.$haspermission.'">Yes</a>';
+                print ' ';
+                print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-no'.$haspermission.'">No</a>';
+                print '<span class="not-approved hidden'.$haspermission.'">No</span>';
+            } else {
+                print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-yes hidden'.$haspermission.'">Yes</a>';
+                print ' ';
+                print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-no hidden'.$haspermission.'">No</a>';
+                print '<span class="not-approved'.$haspermission.'">No</span>';
+            }
+        print '</div>';
 
         print '</div>';
+
         // End of right-section
         // -------------------------------
 
@@ -544,6 +551,11 @@ $lasteditor = user_load(array_values($editors)[0]);
 
   <?php print render($content['comments']); ?>
   <?php 
+        // If user has permissions to edit this node, show edit button
+        if ($editable) {
+            print '<a href="'.$base_url.'/'.'node/' . $node->nid . '/edit" class="edit '.$cancelledclass.'">Edit / reply</a>';
+        }
+
     print '<span class="lastedited">Last edited by ' . $lasteditor->realname . ' on ' . format_date($lastrevision->timestamp, 'utan_tider').'</span>';
   ?>
 

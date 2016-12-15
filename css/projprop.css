@@ -193,6 +193,7 @@ div.main-container div.proposal div.content,
   border-left: 1px solid #dcdcdc;
   border-right: 1px solid #dcdcdc;
   border-bottom: 1px solid #dcdcdc;
+  margin-bottom: 5px;
   float: left;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
   font-size: 1em;
@@ -305,7 +306,7 @@ div.main-container div.proposal div.right-section,
 }
 
 div.main-container div.proposal div.content > div.right-section a.approve, 
-div.main-container div.proposal div.content > div.right-section a.edit {
+div.main-container div.proposal a.edit {
   background-color: #e17e33;
   border: 1px solid #eb7125;
   border-radius: 2px;
@@ -313,12 +314,13 @@ div.main-container div.proposal div.content > div.right-section a.edit {
   padding: 1px 7px;
 }
 
+div.main-container div.proposal div.content > div.right-section a.not-approved,
 div.main-container div.proposal div.content > div.right-section span.not-approved { 
   color: #b94a48;
   background-color: #f2dede;
   border-color: #ebccd1;
   padding: 1px 7px;
-    border-radius: 2px;
+  border-radius: 2px;
 }
 
 div.main-container div.proposal div.content > div.right-section a.approved,

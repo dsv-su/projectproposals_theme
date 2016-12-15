@@ -1,9 +1,12 @@
 jQuery( function() {
   jQuery(' .approve' ).on('click', this, function() {
-    var approveby = this.className.replace('approve ','');
+    var approvebytemp = this.className.replace('approve ','');
+    var approveby = approvebytemp.replace(' haspermission','');
+
 //    var nid = jQuery(this).parents().eq(2).attr('id').replace('node-', '');
     var target = jQuery( this ).attr( 'href' ) + '/' + approveby;
     var button = this;
+    var yesnoneighbourbutton = jQuery(this).parents
     var confirmmessage = "Are you sure you want to approve this proposal?";
 
     if (approveby == 'request-dsv-economy') {
@@ -11,11 +14,19 @@ jQuery( function() {
     }
 
     if (approveby == 'request-vice-head') {
-      confirmmessage = "Are you sure you want to send this proposal to Asa Smedberg? Ensure that you have filled in all neccessary information.";
+      confirmmessage = "Are you sure you want to send this proposal to Vice head? Ensure that you have filled in all neccessary information.";
     }
 
     if (approveby == 'final') {
       confirmmessage = "Do you confirm that you have sent the files to registrator?";
+    }
+
+    if (approveby == 'funding-no') {
+      confirmmessage = "Do you want to report that your proposal have NOT got funding?";
+    }
+
+    if (approveby == 'funding-yes') {
+      confirmmessage = "Do you want to report that your proposal have got funding?";
     }
 
     if (jQuery(button).hasClass('disabled')) {
@@ -31,11 +42,16 @@ jQuery( function() {
           //jQuery(button).parent().find( '.ok-from-' + approveby ).find('.field-item').text( "Yes");
           if (approveby == 'request-dsv-economy' || approveby == 'request-vice-head' || approveby == 'final') {
             jQuery(button).text('Sent');
+            jQuery(button).addClass('approved');
+          } else if (approveby == 'funding-no') {
+            jQuery(button).text('No');
+            jQuery(button).addClass('not-approved');
           } else {
             jQuery(button).text('Yes');
+            jQuery(button).addClass('approved');
           }
+          jQuery(button).siblings("a").addClass('hidden');
           jQuery(button).removeClass('approve');
-          jQuery(button).addClass('approved');
         },
         error: function() {
           alert( 'You cannot do this.' );
