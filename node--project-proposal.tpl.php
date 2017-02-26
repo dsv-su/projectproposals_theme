@@ -522,9 +522,9 @@ $lasteditor = user_load(array_values($editors)[0]);
             if ($admin || $vicehead) {
                 $haspermission = ' haspermission';
             }
-            if ($node->field_approved_funding['und'][0]['value'] === "1") {
+            if ($node->field_approved_funding['und'][0]['value'] == 1) {
                 print '<span class="approved">Yes</span>';
-            } else if ($node->field_approved_funding['und'][0]['value'] === "0") {
+            } else if (isset($node->field_approved_funding['und'][0]['value']) && $node->field_approved_funding['und'][0]['value'] == 0) {
                 print '<span class="not-approved">No</span>';
             } else if (($admin || $vicehead || $user->uid == $node->uid) && !$cancelled) {
                 print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-yes'.$haspermission.'">Yes</a>';
@@ -537,6 +537,10 @@ $lasteditor = user_load(array_values($editors)[0]);
                 print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-no hidden'.$haspermission.'">No</a>';
                 print '<span class="not-approved'.$haspermission.'">No</span>';
             }
+        print '</div>';
+
+        print '<div class="decision-date">';
+            print render($content['field_decision_date']);
         print '</div>';
 
         print '</div>';

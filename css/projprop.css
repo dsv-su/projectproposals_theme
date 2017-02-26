@@ -237,7 +237,7 @@ div.main-container div.proposal div.content > div.fourth-row,
 }
 
 div.main-container div.proposal div.content > div.fourth-row {
-  min-height: 24px;
+  min-height: 50px;
 }
 
 /* This sets up proper widths for the fields in the first row */
