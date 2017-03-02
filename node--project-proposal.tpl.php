@@ -171,7 +171,14 @@
 
     <!-- Node author -->
     <div class="author">
-      <?php print '<span class="field-label">Main researcher: </span>' . $node->field_dsv_person_in_charge['und'][0]['user']->realname;?>
+        <?php
+        print '<span class="field-label">Main researcher: </span>';
+        if (!empty($node->field_dsv_person_in_charge['und'][0]['user']->realname)) {
+            print $node->field_dsv_person_in_charge['und'][0]['user']->realname;
+        } else {
+            print $node->field_dsv_person_in_charge['und'][0]['user']->name;
+        }
+        ?>
     </div>
 
     <!-- Deadline -->
