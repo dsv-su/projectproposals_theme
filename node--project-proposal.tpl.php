@@ -457,7 +457,7 @@ $lasteditor = user_load(array_values($editors)[0]);
             }
             if ($node->field_ok_from_dsv_economy['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
-            } else if  (!$cancelled) {
+            } else if (($admin || $economy) && !$cancelled) {
                 print '<span class="not-approved hidden'.$haspermission.'">No</span>';
                 print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy'.$haspermission.'">Approve</a>';
             } else {
