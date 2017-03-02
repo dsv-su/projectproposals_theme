@@ -144,7 +144,8 @@
     }
 ?>
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes;
-    if ($node->field_cancelled['und'][0]['value']) { print ' dimmed';} 
+    if (isset($node->field_cancelled['und'][0]['value']) &&
+        $node->field_cancelled['und'][0]['value']) { print ' dimmed'; }
     if ($new) { print ' updatesavailable';}
     ?> clearfix"<?php print $attributes; ?>>
 
@@ -152,7 +153,7 @@
     <?php print render($title_prefix); ?>
     <?php if (!$page): ?>
       <h2<?php print $title_attributes; ?>><?php print $title;
-      if ($node->field_cancelled['und'][0]['value']) {
+      if (isset($node->field_cancelled['und'][0]['value']) && $node->field_cancelled['und'][0]['value']) {
         if (!$admin) {
             $editable = false;
         }
@@ -402,7 +403,8 @@ $lasteditor = user_load(array_values($editors)[0]);
         print '<div class="ok-from-unit-head">';
             print '<span class="field-label">OK from Unit head: </span>';
             //print render($content['field_ok_from_unit_head']);
-            if ($node->field_ok_from_unit_head['und'][0]['value']) {
+            if (isset($node->field_ok_from_unit_head['und'][0]['value']) &&
+                $node->field_ok_from_unit_head['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
             } else if (($admin || $unithead) && !$cancelled) {
                 print '<a href="node/approve/'.$node->nid. '" class="approve unit-head">Approve</a>';
@@ -522,7 +524,8 @@ $lasteditor = user_load(array_values($editors)[0]);
             if ($admin || $vicehead) {
                 $haspermission = ' haspermission';
             }
-            if ($node->field_approved_funding['und'][0]['value'] == 1) {
+            if (isset($node->field_approved_funding['und'][0]['value'])
+                && $node->field_approved_funding['und'][0]['value'] == 1) {
                 print '<span class="approved">Yes</span>';
             } else if (isset($node->field_approved_funding['und'][0]['value']) && $node->field_approved_funding['und'][0]['value'] == 0) {
                 print '<span class="not-approved">No</span>';
