@@ -472,6 +472,10 @@ $lasteditor = user_load(array_values($editors)[0]);
        // print '</div>';
         // OK from Uno
 
+        /* Temporarily disable Request to Vice head. Will re-think it later.
+        Probably it can be enabled back just for Economy/Unit, but not for researchers */
+
+        /*
         print '<div class="request-to-vice-head">';
             print '<span class="field-label">Request to Vice head: </span>';
             $haspermission = '';
@@ -488,6 +492,7 @@ $lasteditor = user_load(array_values($editors)[0]);
                 print '<span class="not-approved'.$haspermission.'">Not sent</span>';
             }
         print '</div>';
+        */
         
         print '<div class="ok-from-vice-head">';
             print '<span class="field-label">OK from Vice head: </span>';
