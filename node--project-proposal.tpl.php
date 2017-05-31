@@ -535,7 +535,7 @@ $lasteditor = user_load(array_values($editors)[0]);
 
         // Final approval
         print '<div class="approved-funding">';
-            print '<span class="field-label">Approved by funding organization: </span>';
+            print '<span class="field-label">Final funding granted: </span>';
             $haspermission = '';
             if ($admin || $vicehead) {
                 $haspermission = ' haspermission';
@@ -557,7 +557,6 @@ $lasteditor = user_load(array_values($editors)[0]);
                 print '<span class="not-approved'.$haspermission.'">No</span>';
             }
         print '</div>';
-
         print '</div>';
 
         // End of right-section
