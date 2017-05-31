@@ -293,7 +293,7 @@ $lasteditor = user_load(array_values($editors)[0]);
     <div class="content" <?php print $content_attributes; ?>>
       <?php
         // We hide the comments and links now so that we can render them later.
-        hide($content['comments']);
+        //hide($content['comments']);
         hide($content['links']);
 
         // First row
@@ -529,9 +529,13 @@ $lasteditor = user_load(array_values($editors)[0]);
             }
         print '</div>';
 
+        print '<div class="decision-date">';
+            print render($content['field_decision_date']);
+        print '</div>';
+
         // Final approval
         print '<div class="approved-funding">';
-            print '<span class="field-label">Proposal funds approved: </span>';
+            print '<span class="field-label">Approved by funding organization: </span>';
             $haspermission = '';
             if ($admin || $vicehead) {
                 $haspermission = ' haspermission';
@@ -552,10 +556,6 @@ $lasteditor = user_load(array_values($editors)[0]);
                 print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-no hidden'.$haspermission.'">No</a>';
                 print '<span class="not-approved'.$haspermission.'">No</span>';
             }
-        print '</div>';
-
-        print '<div class="decision-date">';
-            print render($content['field_decision_date']);
         print '</div>';
 
         print '</div>';
