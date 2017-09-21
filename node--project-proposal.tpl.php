@@ -90,10 +90,12 @@
   $admin = false;
   $cancelled = false;
   $secretary = false;
+  $researcher = false;
 
   if ($user->uid == $node->uid) {
     // User is the owner/author of this proposal
     $editable = true;
+    $researcher = true;
 
   } else if (isset($user->roles[3])) {
     // User is an administrator
@@ -511,16 +513,17 @@ $lasteditor = user_load(array_values($editors)[0]);
             }
         print '</div>';
 
-        // Sent to Birgitta a.k.a. Final submissions
+        // Sent to Birgitta a.k.a. Final submissions.
+        // Researcher has to click it manually and the system should send this to Registrator
         print '<div class="final-submissions">';
             print '<span class="field-label">Final submission: </span>';
             $haspermission = '';
-            if ($admin || $vicehead) {
+            if ($admin || $researcher) {
                 $haspermission = ' haspermission';
             }
             if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
                 print '<span class="approved">Sent</span>';
-            } else if (($admin || $secretary) && !$cancelled) {
+            } else if (($admin || $researcher) && !$cancelled) {
                 print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final'.$haspermission.'">Send</a>';
                 print '<span class="not-approved hidden'.$haspermission.'">Not sent</span>';
             } else {

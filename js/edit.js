@@ -18,7 +18,7 @@ jQuery( function() {
     }
 
     if (approveby == 'final') {
-      confirmmessage = "Do you confirm that you have sent the files to registrator?";
+      confirmmessage = "Do you want to send your proposal with attached files to Registrator?";
     }
 
     if (approveby == 'funding-no') {
