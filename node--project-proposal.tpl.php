@@ -424,14 +424,12 @@ $lasteditor = user_load(array_values($editors)[0]);
             }
         print '</div>';
 
-        /*
         // Request to DSV Economy
         print '<div class="request-to-dsv-economy">';
             print '<span class="field-label">Request to DSV economy: </span>';
             if ($node->field_request_to_dsv_economy['und'][0]['value']) {
                 print '<span class="approved">Sent</span>';
-            } else if (($admin || $user->uid == $node->uid) && !$cancelled
-                    && $node->field_ok_from_unit_head['und'][0]['value']) {
+            } else if (($admin || $researcher) && !$cancelled) {
                 // We disable request-dsv-economy button if some fields are not filled in.
                 // We probably need to clarify which fields are mandatory.
                 if (!$node->field_attachment_to_dsv_economy['und']) {
@@ -445,10 +443,9 @@ $lasteditor = user_load(array_values($editors)[0]);
             }
             // Economy people shouldn't edit proposals until they're requested to.
             if ($economy & !$node->field_request_to_dsv_economy['und'][0]['value']) {
-                $editable = false;
+                // $editable = false;
             }
         print '</div>';
-        */
 
         // OK from DSV Economy
         print '<div class="ok-from-dsv-economy">';
