@@ -269,10 +269,10 @@ $lasteditor = user_load(array_values($editors)[0]);
         if ($cancellable) {
             if ($cancelled) {
                 print '<br><a href="node/cancel/' . $node->nid . '" class="cancel cancelled">
-                    <img src="'.$base_url.'/'.drupal_get_path('theme', 'projectproposals_theme').'/images/reload.png'.'" title="Uncancel proposal" alt="Uncancel this proposal"></a>';
+                    <img src="'.$base_url.'/'.drupal_get_path('theme', 'projectproposals_theme').'/images/reload.png'.'" title="Uncancel proposal (bring it back and enable it to be edited by various roles)" alt="Uncancel this proposal"></a>';
             } else {
                 print '<br><a href="node/cancel/' . $node->nid . '" class="cancel">
-                    <img src="'.$base_url.'/'.drupal_get_path('theme', 'projectproposals_theme').'/images/cancel.png'.'" title="Cancel proposal" alt="Cancel this proposal"></a>';
+                    <img src="'.$base_url.'/'.drupal_get_path('theme', 'projectproposals_theme').'/images/cancel.png'.'" title="Cancel proposal (this will disable it and prevent all future operations with it, you will be able to uncancel it though)" alt="Cancel this proposal"></a>';
             }
         }
     ?>
@@ -437,6 +437,7 @@ $lasteditor = user_load(array_values($editors)[0]);
                 }
                 print '<span class="not-approved hidden">Not sent</span>';
                 print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy'.$disabledclass.'">Send</a>';
+                print '<br><small>(request DSV economy only after the budget is uploaded)</small></p>';
             } else {
                 print '<span class="not-approved">Not sent</span>';
                 print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy hidden'.$disabledclass.'">Send</a>';
