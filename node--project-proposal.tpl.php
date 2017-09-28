@@ -424,6 +424,7 @@ $lasteditor = user_load(array_values($editors)[0]);
             }
         print '</div>';
 
+        /*
         // Request to DSV Economy
         print '<div class="request-to-dsv-economy">';
             print '<span class="field-label">Request to DSV economy: </span>';
@@ -447,6 +448,7 @@ $lasteditor = user_load(array_values($editors)[0]);
                 // $editable = false;
             }
         print '</div>';
+        */
 
         // OK from DSV Economy
         print '<div class="ok-from-dsv-economy">';
@@ -461,8 +463,14 @@ $lasteditor = user_load(array_values($editors)[0]);
                 print '<span class="not-approved hidden'.$haspermission.'">No</span>';
                 print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy'.$haspermission.'">Approve</a>';
             } else {
-                print '<span class="not-approved'.$haspermission.'">No</span>';
-                print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy hidden'.$haspermission.'">Approve</a>';
+                if ($researcher && !$cancelled) {
+                    print '<span class="not-approved hidden">Not sent</span>';
+                    print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy'.$disabledclass.'">Request approval</a>';
+                    print '<br><small>(request economy approval only if the budget is uploaded)</small></p>';
+                } else {
+                    print '<span class="not-approved'.$haspermission.'">No</span>';
+                    print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy hidden'.$haspermission.'">Approve</a>';
+                }
             }
         print '</div>';
 
