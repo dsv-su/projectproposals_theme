@@ -92,12 +92,7 @@
   $secretary = false;
   $researcher = false;
 
-  if ($user->uid == $node->uid) {
-    // User is the owner/author of this proposal
-    $editable = true;
-    $researcher = true;
-
-  } else if (isset($user->roles[3])) {
+  if (isset($user->roles[3])) {
     // User is an administrator
     $editable = true;
     $admin = true;
@@ -122,6 +117,13 @@
     $economy = true;
     $editable = true;
   }
+
+  if ($user->uid == $node->uid) {
+    // User is the owner/author of this proposal
+    $editable = true;
+    $researcher = true;
+  }
+
   $cancellable = true;
   if (!$editable) {
     $cancellable = false;
@@ -457,16 +459,22 @@ $lasteditor = user_load(array_values($editors)[0]);
             if ($admin || $economy) {
                 $haspermission = ' haspermission';
             }
-            if ($node->field_ok_from_dsv_economy['und'][0]['value']) {
+            if (isset ($node->field_ok_from_dsv_economy['und'][0]['value']) &&
+                $node->field_ok_from_dsv_economy['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
             } else if (($admin || $economy) && !$cancelled) {
                 print '<span class="not-approved hidden'.$haspermission.'">No</span>';
                 print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy'.$haspermission.'">Approve</a>';
             } else {
                 if ($researcher && !$cancelled) {
-                    print '<span class="not-approved hidden">Not sent</span>';
-                    print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy'.$disabledclass.'">Request approval</a>';
-                    print '<br><small>(request economy approval only if the budget is uploaded)</small></p>';
+                    if (isset($node->field_request_to_dsv_economy['und'][0]['value']) &&
+                        $node->field_request_to_dsv_economy['und'][0]['value']) {
+                        print '<span class="not-approved">Requested</span>';
+                    } else {
+                        print '<span class="not-approved hidden">Requested</span>';
+                        print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy'.$disabledclass.'">Request approval</a>';
+                        print '<br><small>(request economy approval only if the budget is uploaded)</small>';
+                    }
                 } else {
                     print '<span class="not-approved'.$haspermission.'">No</span>';
                     print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy hidden'.$haspermission.'">Approve</a>';
@@ -508,7 +516,8 @@ $lasteditor = user_load(array_values($editors)[0]);
             if ($admin || $vicehead) {
                 $haspermission = ' haspermission';
             }
-            if ($node->field_ok_from_uno['und'][0]['value']) {
+            if (isset($node->field_ok_from_uno['und'][0]['value']) &&
+                $node->field_ok_from_uno['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
             } else if (($admin || $vicehead) && !$cancelled) {
                 print '<a href="node/approve/'.$node->nid. '" class="approve vice-head'.$haspermission.'">Approve</a>';
@@ -529,7 +538,13 @@ $lasteditor = user_load(array_values($editors)[0]);
             }
             if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
                 print '<span class="approved">Sent</span>';
-            } else if (($admin || $researcher) && !$cancelled) {
+            } else if (($admin || $researcher) && !$cancelled &&
+                isset($node->field_ok_from_unit_head['und'][0]['value']) &&
+                $node->field_ok_from_unit_head['und'][0]['value'] &&
+                isset ($node->field_ok_from_dsv_economy['und'][0]['value']) &&
+                $node->field_ok_from_dsv_economy['und'][0]['value'] &&
+                isset($node->field_ok_from_uno['und'][0]['value']) &&
+                $node->field_ok_from_uno['und'][0]['value']) {
                 print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final'.$haspermission.'">Send</a>';
                 print '<span class="not-approved hidden'.$haspermission.'">Not sent</span>';
             } else {

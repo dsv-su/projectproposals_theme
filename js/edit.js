@@ -40,9 +40,13 @@ jQuery( function() {
         dataType: 'json',
         success: function(data) {
           //jQuery(button).parent().find( '.ok-from-' + approveby ).find('.field-item').text( "Yes");
-          if (approveby == 'request-dsv-economy' || approveby == 'request-vice-head' || approveby == 'final') {
+          if (approveby == 'request-vice-head' || approveby == 'final') {
             jQuery(button).text('Sent');
             jQuery(button).addClass('approved');
+          } else if (approveby == 'request-dsv-economy') {
+            jQuery(button).text('Requested');
+            jQuery(button).addClass('not-approved');
+            jQuery(button).siblings("small").addClass('hidden');
           } else if (approveby == 'funding-no') {
             jQuery(button).text('No');
             jQuery(button).addClass('not-approved');
