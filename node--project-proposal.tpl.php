@@ -388,8 +388,10 @@ $lasteditor = user_load(array_values($editors)[0]);
         // Fourth row
         // -------------------------------
         // We only show Attachments/Comments for authors or editors.
-        if ($editable) {
-        print '<div class="fourth-row">';
+        if ($editable ||
+                (isset($node->field_approved_funding['und'][0]['value'])
+                && $node->field_approved_funding['und'][0]['value'] == 1)) {
+            print '<div class="fourth-row">';
             print '<div class="comment">';
             print render($content['field_comment']);
             print '</div>';
@@ -397,10 +399,7 @@ $lasteditor = user_load(array_values($editors)[0]);
             print '<div class="attachments">';
             print render($content['field_attachments']);
             print '</div>';
-
-    //    print '<span class="note">Proposal tips: it has to be approved by Unit head, after that it can be filled in with details and sent to DSV economy.</span>';
-
-        print '</div>';
+            print '</div>';
         }
         // End of fourth row
         // -------------------------------
