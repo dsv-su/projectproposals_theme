@@ -25,9 +25,17 @@
 }
 
 /* Hide 'Remove' button from file picker */
-.hide-remove-button[id="edit-field-attachments"] button[value='Remove']
-{
+.hide-remove-button[id="edit-field-attachments"] button[value='Remove'] {
   display: none;
+}
+
+/* Hide 'Upload' from file picker */
+.hide-upload-button .form-group:last-child {
+  display: none;
+}
+
+.black-help-font .help-block {
+  color: #000000 !important;
 }
 
 /*
