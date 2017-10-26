@@ -471,7 +471,7 @@ $lasteditor = user_load(array_values($editors)[0]);
                         print '<span class="not-approved">Requested</span>';
                     } else {
                         print '<span class="not-approved hidden">Requested</span>';
-                        print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy'.$disabledclass.'">Request approval</a>';
+                        print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy'.$haspermission.'">Request approval</a>';
                         print '<br><small>(request economy approval only if the budget is uploaded)</small>';
                     }
                 } else {
