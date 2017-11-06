@@ -330,6 +330,9 @@ $lasteditor = user_load(array_values($editors)[0]);
 
         // Program/Call/Target
         print '<div class="program-call-target">';
+
+        $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+        $content['field_program_call_target'][0]['#markup'] = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">(link)</a>', $content['field_program_call_target'][0]['#markup']);
         print render($content['field_program_call_target']);
         print '</div>';
 
