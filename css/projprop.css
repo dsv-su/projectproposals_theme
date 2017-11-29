@@ -278,6 +278,21 @@ div.main-container div.proposal div.fourth-row .comment {
   vertical-align: top;
   width: 66%;
 }
+
+div.main-container div.proposal div.fourth-row .comment .field-label.collapsed {
+    background-image: url('../images/collapsed.png');
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding-left: 18px;
+}
+
+div.main-container div.proposal div.fourth-row .comment .field-label.expanded {
+    background-image: url('../images/expanded.png');
+    cursor: pointer;
+    background-repeat: no-repeat;
+    padding-left: 18px;
+}
+
 div.main-container div.proposal div.fourth-row .attachments {
   display: inline-block;
   vertical-align: top;

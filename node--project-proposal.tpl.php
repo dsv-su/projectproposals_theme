@@ -333,6 +333,7 @@ $lasteditor = user_load(array_values($editors)[0]);
 
         $url = '@(http(s)?)?(://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
         $content['field_program_call_target'][0]['#markup'] = preg_replace($url, '<a href="http$2://$4" target="_blank" title="$0">(link)</a>', $content['field_program_call_target'][0]['#markup']);
+        $content['field_program_call_target']['#title'] = explode(' (', $content['field_program_call_target']['#title'])[0];
         print render($content['field_program_call_target']);
         print '</div>';
 
@@ -396,7 +397,32 @@ $lasteditor = user_load(array_values($editors)[0]);
                 && $node->field_approved_funding['und'][0]['value'] == 1)) {
             print '<div class="fourth-row">';
             print '<div class="comment">';
-            print render($content['field_comment']);
+            $togglecollapsed = '';
+            if (isset($content['field_conversation'][0]['#markup']) && !empty($content['field_conversation'][0]['#markup'])) {
+                $content['field_conversation'][0]['#markup'] = nl2br($content['field_conversation'][0]['#markup']);
+                $comments = explode('----------------------', $content['field_conversation'][0]['#markup']);
+                $end = array_pop($comments);
+                $latestcomment = array_shift($comments);
+                $content['field_conversation']['#title'] = 'Latest comment';
+                if (count($comments)) {
+                    $content['field_conversation']['#title'] .= ' (click to expand full conversation):';
+                    $fullcomment = implode('----------------------', $comments);
+                    $fullcomment = '----------------------' . "\r\n\r\n" . $fullcomment;
+                    $togglecollapsed = 'collapsed';
+                } else {
+                    $content['field_conversation']['#title'] .= ':';
+                }
+
+                //print render($content['field_conversation']);
+                print '<div class="field field-name-field-conversation field-type-text-long field-label-above">
+                    <div class="field-label '.$togglecollapsed.'">'.
+                        $content['field_conversation']['#title'].'</div>
+                    <div class="field-items">
+                        <div class="field-item even latest-comment">'.$latestcomment.'</div>
+                        <div class="field-item even full-comment">'.$fullcomment.'</div>
+                    </div>
+                    </div>';
+            }
             print '</div>';
 
             print '<div class="attachments">';
