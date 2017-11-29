@@ -399,15 +399,18 @@ $lasteditor = user_load(array_values($editors)[0]);
             print '<div class="comment">';
             $togglecollapsed = '';
             if (isset($content['field_conversation'][0]['#markup']) && !empty($content['field_conversation'][0]['#markup'])) {
-                $content['field_conversation'][0]['#markup'] = nl2br($content['field_conversation'][0]['#markup']);
+                $content['field_conversation'][0]['#markup'] = str_replace( "\n", '<br>', $content['field_conversation'][0]['#markup'] );
+                $content['field_conversation'][0]['#markup'] = str_replace( "\r", '', $content['field_conversation'][0]['#markup'] );
                 $comments = explode('----------------------', $content['field_conversation'][0]['#markup']);
-                $end = array_pop($comments);
                 $latestcomment = array_shift($comments);
+                $end = array_pop($comments);
+                $latestcomment = preg_replace('/(<br>)+$/', '', $latestcomment);
                 $content['field_conversation']['#title'] = 'Latest comment';
                 if (count($comments)) {
                     $content['field_conversation']['#title'] .= ' (click to expand full conversation):';
                     $fullcomment = implode('----------------------', $comments);
-                    $fullcomment = '----------------------' . "\r\n\r\n" . $fullcomment;
+                    $fullcomment = "<br>" . '----------------------' . $fullcomment;
+                    $fullcomment = preg_replace('/(<br>)+$/', '', $fullcomment);
                     $togglecollapsed = 'collapsed';
                 } else {
                     $content['field_conversation']['#title'] .= ':';
