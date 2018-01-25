@@ -3,7 +3,7 @@ jQuery( function() {
 
     var button = this;
     var action = 'own';
-    var confirmmessage = "Are you sure you want to become responsible for this proposal?";
+    var confirmmessage = "Are you sure you want to become the economy owner of this proposal?";
     if (jQuery(button).hasClass('owned')) {
         action = 'unown';
         confirmmessage = "Are you sure? This will detach you from the proposal so other economy person can take care of it.";
@@ -28,8 +28,8 @@ jQuery( function() {
             jQuery(button).removeClass('owned');
             jQuery(button).addClass('not-owned');
             jQuery(button).children('img').attr('src', imageurl + 'include.png');
-            jQuery(button).children('img').attr('alt', 'Assign the proposal to me');
-            jQuery(button).children('img').attr('title', 'Assign the proposal to me');
+            jQuery(button).children('img').attr('alt', 'Become the economy owner of this proposal');
+            jQuery(button).children('img').attr('title', 'Become the economy owner of this proposal');
             jQuery(ownername).text(data);
           }
         },
