@@ -405,6 +405,7 @@ $lasteditor = user_load(array_values($editors)[0]);
                 $latestcomment = array_shift($comments);
                 $end = array_pop($comments);
                 $latestcomment = preg_replace('/(<br>)+$/', '', $latestcomment);
+                $fullcomment = '';
                 $content['field_conversation']['#title'] = 'Latest comment';
                 if (count($comments)) {
                     $content['field_conversation']['#title'] .= ' (click to expand full conversation):';
@@ -626,7 +627,7 @@ $lasteditor = user_load(array_values($editors)[0]);
   <?php 
         // If user has permissions to edit this node, show edit button.
         // Aslo hide the button if the proposal is submitted to Registrator.
-        if ($editable && (!$node->field_sent_to_birgitta_o['und'][0]['value'])) {
+        if (($editable && (!$node->field_sent_to_birgitta_o['und'][0]['value'])) || $admin) {
             print '<a href="'.$base_url.'/'.'node/' . $node->nid . '/edit" class="edit '.$cancelledclass.'">Edit / reply</a>';
         }
 
