@@ -627,7 +627,7 @@ $lasteditor = user_load(array_values($editors)[0]);
   <?php 
         // If user has permissions to edit this node, show edit button.
         // Aslo hide the button if the proposal is submitted to Registrator.
-        if (($editable && (!$node->field_sent_to_birgitta_o['und'][0]['value'])) || $admin) {
+        if (($editable && (!$node->field_sent_to_birgitta_o['und'][0]['value'])) || $admin || $vicehead) {
             print '<a href="'.$base_url.'/'.'node/' . $node->nid . '/edit" class="edit '.$cancelledclass.'">Edit / reply</a>';
         }
 
