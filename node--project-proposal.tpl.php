@@ -445,16 +445,19 @@ $lasteditor = user_load(array_values($editors)[0]);
         // OK from Unit head
         print '<div class="ok-from-unit-head">';
             print '<span class="field-label">OK from Unit head: </span>';
-            //print render($content['field_ok_from_unit_head']);
+            $haspermission = '';
+            if ($admin || $unithead) {
+                $haspermission = ' haspermission';
+            }
             if (isset($node->field_ok_from_unit_head['und'][0]['value']) &&
                 $node->field_ok_from_unit_head['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
-            } else if (($admin || $unithead) && !$cancelled) {
-                print '<a href="node/approve/'.$node->nid. '" class="approve unit-head">Approve</a>';
-                print '<span class="not-approved hidden">No</span>';
+            } else if ($haspermission && !$cancelled) {
+                print '<a href="node/approve/'.$node->nid. '" class="approve unit-head'.$haspermission.'">Approve</a>';
+                print '<span class="not-approved hidden'.$haspermission.'">No</span>';
             } else {
-                print '<a href="node/approve/'.$node->nid. '" class="approve unit-head hidden">Approve</a>';
-                print '<span class="not-approved">No</span>';
+                print '<a href="node/approve/'.$node->nid. '" class="approve unit-head hidden'.$haspermission.'">Approve</a>';
+                print '<span class="not-approved'.$haspermission.'">No</span>';
             }
         print '</div>';
 
@@ -494,7 +497,7 @@ $lasteditor = user_load(array_values($editors)[0]);
             if (isset ($node->field_ok_from_dsv_economy['und'][0]['value']) &&
                 $node->field_ok_from_dsv_economy['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
-            } else if (($admin || $economy) && !$cancelled) {
+            } else if ($haspermission && !$cancelled) {
                 print '<span class="not-approved hidden'.$haspermission.'">No</span>';
                 print '<a href="node/approve/'.$node->nid. '" class="approve dsv-economy'.$haspermission.'">Approve</a>';
             } else {
@@ -551,7 +554,7 @@ $lasteditor = user_load(array_values($editors)[0]);
             if (isset($node->field_ok_from_uno['und'][0]['value']) &&
                 $node->field_ok_from_uno['und'][0]['value']) {
                 print '<span class="approved">Yes</span>';
-            } else if (($admin || $vicehead) && !$cancelled) {
+            } else if ($haspermission && !$cancelled) {
                 print '<a href="node/approve/'.$node->nid. '" class="approve vice-head'.$haspermission.'">Approve</a>';
                 print '<span class="not-approved hidden'.$haspermission.'">No</span>';
             } else {
@@ -565,18 +568,18 @@ $lasteditor = user_load(array_values($editors)[0]);
         print '<div class="final-submissions">';
             print '<span class="field-label">Final submission: </span>';
             $haspermission = '';
-            if ($admin || $researcher) {
-                $haspermission = ' haspermission';
-            }
-            if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
-                print '<span class="approved">Sent</span>';
-            } else if (($admin || $researcher) && !$cancelled &&
+            if ((($admin || $researcher) &&
                 isset($node->field_ok_from_unit_head['und'][0]['value']) &&
                 $node->field_ok_from_unit_head['und'][0]['value'] &&
                 isset ($node->field_ok_from_dsv_economy['und'][0]['value']) &&
                 $node->field_ok_from_dsv_economy['und'][0]['value'] &&
                 isset($node->field_ok_from_uno['und'][0]['value']) &&
-                $node->field_ok_from_uno['und'][0]['value']) {
+                $node->field_ok_from_uno['und'][0]['value']) || ($vicehead && (strtotime($node->field_deadline['und'][0]['value']) < time()))) {
+                $haspermission = ' haspermission';
+            }
+            if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
+                print '<span class="approved">Sent</span>';
+            } else if ($haspermission && !$cancelled) {
                 print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final'.$haspermission.'">Send</a>';
                 print '<span class="not-approved hidden'.$haspermission.'">Not sent</span>';
             } else {
