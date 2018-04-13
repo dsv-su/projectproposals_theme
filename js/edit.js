@@ -22,11 +22,11 @@ jQuery( function() {
     }
 
     if (approveby == 'funding-no') {
-      confirmmessage = "Do you want to report that your proposal have NOT been granted funding by the Funding Organization?\n\nIMPORTANT: Please also send the decision letter to register@dsv.su.se.";
+      confirmmessage = "Do you want to report that your proposal have NOT been granted funding by the Funding Organization?\n\nIMPORTANT: Please also send the decision letter to registrator@dsv.su.se.";
     }
 
     if (approveby == 'funding-yes') {
-      confirmmessage = "Do you want to report that your proposal have been granted funding by the Funding Organization?\n\nIMPORTANT: Please also send the decision letter to register@dsv.su.se";
+      confirmmessage = "Do you want to report that your proposal have been granted funding by the Funding Organization?\n\nIMPORTANT: Please also send the decision letter to registrator@dsv.su.se";
     }
 
     if (jQuery(button).hasClass('disabled')) {
