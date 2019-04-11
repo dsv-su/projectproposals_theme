@@ -178,9 +178,9 @@
         <?php
         print '<span class="field-label">Main researcher: </span>';
         if (!empty($node->field_dsv_person_in_charge['und'][0]['user']->realname)) {
-            print $node->field_dsv_person_in_charge['und'][0]['user']->realname;
+            print l($node->field_dsv_person_in_charge['und'][0]['user']->realname, drupal_get_path_alias('user/' . $node->uid));
         } else {
-            print $node->field_dsv_person_in_charge['und'][0]['user']->name;
+            print l($node->field_dsv_person_in_charge['und'][0]['user']->name, drupal_get_path_alias('user/' . $node->uid));
         }
         ?>
     </div>
@@ -316,7 +316,21 @@ $lasteditor = user_load(array_values($editors)[0]);
 
         // Coapplicatns
         print '<div class="coapplicants">';
-        print render($content['field_coapplicants']);
+        //print render($content['field_coapplicants']);
+        if ($node->field_coapplicants) {
+            print '<div class="field"><span class="field-label">Co-applicants: </span>';
+            foreach ($node->field_coapplicants['und'] as $coapplicant) {
+                if (!empty($coapplicant['user']->realname)) {
+                    print l($coapplicant['user']->realname, drupal_get_path_alias('user/' . $coapplicant['uid']));
+                } else {
+                    print l($coapplicant['user']->name, drupal_get_path_alias('user/' . $coapplicant['uid']));
+                }
+                if ($coapplicant !== end($node->field_coapplicants['und'])) {
+                    print ", ";
+                }
+            }
+            print "</div>";
+        }
         print '</div>';
 
         print '</div>';

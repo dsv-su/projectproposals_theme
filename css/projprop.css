@@ -536,3 +536,15 @@ a.cancel:visited {
 .lastedited {
   float: right;
 }
+
+.views-exposed-form .views-exposed-widget .btn {
+    margin-top: 1.6em;
+}
+
+.form-type-textfield .ctools-auto-submit-processed {
+  width: 200px;
+}
+
+.views-widget-filter-title {
+  clear: left;
+}
