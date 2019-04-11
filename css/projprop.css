@@ -359,6 +359,10 @@ div.main-container div.proposal .right-section a:hover {
   text-decoration: none;
 }
 
+a:visited {
+  color: #005b7f;
+}
+
 a.economy-owner {
   position: absolute;
   right: -22px;
@@ -547,4 +551,8 @@ a.cancel:visited {
 
 .views-widget-filter-title {
   clear: left;
+}
+
+.view-proposals .coapplicants span.field-label {
+  display: block;
 }
