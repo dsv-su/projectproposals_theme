@@ -319,13 +319,16 @@ div.main-container div.proposal div.fourth-row div.field-label {
 div.main-container div.proposal div.right-section,
 #edit-right-section {
   position: relative;
-  display: block;
+  display: inline-block;
+  width: 25%;
   line-height: 2em;
   margin: 0;
   text-align: right;
   padding-top: 7px;
   padding-right: 7px;
   z-index: 4;
+  border-left: 1px solid #dcdcdc;
+  margin-left: -1px;
 }
 
 div.main-container div.proposal div.content > div.right-section a.approve, 

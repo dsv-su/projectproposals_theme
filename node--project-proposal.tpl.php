@@ -634,7 +634,7 @@ $lasteditor = user_load(array_values($editors)[0]);
                 print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-yes hidden'.$haspermission.'">Yes</a>';
                 print ' ';
                 print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-no hidden'.$haspermission.'">No</a>';
-                print '<span class="not-approved'.$haspermission.'">No</span>';
+                print '<span class="not-approved'.$haspermission.'">Not reported</span>';
             }
         print '</div>';
         print '</div>';
