@@ -606,6 +606,10 @@ $lasteditor = user_load(array_values($editors)[0]);
             print render($content['field_decision_date']);
         print '</div>';
 
+        print '<div class="start-date">';
+            print render($content['field_start_date']);
+        print '</div>';
+
         // Final approval
         print '<div class="approved-funding">';
             print '<span class="field-label">Final funding granted: </span>';
