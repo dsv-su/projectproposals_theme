@@ -618,7 +618,10 @@ $lasteditor = user_load(array_values($editors)[0]);
                 print '<span class="approved">Yes</span>';
             } else if (isset($node->field_approved_funding['und'][0]['value']) && $node->field_approved_funding['und'][0]['value'] == 0) {
                 print '<span class="not-approved">No</span>';
-            } else if (($admin || $vicehead || $user->uid == $node->uid) && !$cancelled) {
+            } else if (($haspermission || $user->uid == $node->uid) && !$cancelled &&
+                    isset($node->field_ok_from_uno['und'][0]['value']) && $node->field_ok_from_uno['und'][0]['value'] &&
+                    isset($node->field_ok_from_dsv_economy['und'][0]['value']) && $node->field_ok_from_dsv_economy['und'][0]['value'] &&
+                    isset($node->field_sent_to_birgitta_o['und'][0]['value']) && $node->field_sent_to_birgitta_o['und'][0]['value']) {
                 print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-yes'.$haspermission.'">Yes</a>';
                 print ' ';
                 print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve funding-no'.$haspermission.'">No</a>';
