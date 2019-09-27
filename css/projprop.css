@@ -358,6 +358,15 @@ div.main-container div.proposal div.content > div.right-section span.approved {
   padding: 1px 7px;
 }
 
+div.main-container div.proposal div.content > div.right-section a.requested,
+div.main-container div.proposal div.content > div.right-section span.requested {
+  background-color: #fcf8e3;
+  border: 1px solid #faebcc;
+  border-radius: 2px;
+  color: #c09853;
+  padding: 1px 7px;
+}
+
 div.main-container div.proposal .right-section a:hover {
   text-decoration: none;
 }

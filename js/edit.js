@@ -17,8 +17,12 @@ jQuery( function() {
       confirmmessage = "Are you sure you want to send this proposal to Vice head? Ensure that you have filled in all neccessary information.";
     }
 
-    if (approveby == 'final') {
+    if (approveby == 'final-request') {
       confirmmessage = "Do you want to send your proposal with attached files to Registrator? Please ensure that you have uploaded the final version of the application, and only then press 'Send'";
+    }
+
+    if (approveby == 'final') {
+      confirmmessage = "Do you want to send this proposal with attached files to Registrator? Please ensure that the researcher have uploaded the final version of the application, and only then press 'Send'";
     }
 
     if (approveby == 'funding-no') {
@@ -43,9 +47,9 @@ jQuery( function() {
           if (approveby == 'request-vice-head' || approveby == 'final') {
             jQuery(button).text('Sent');
             jQuery(button).addClass('approved');
-          } else if (approveby == 'request-dsv-economy') {
+          } else if (approveby == 'request-dsv-economy' || approveby == 'final-request') {
             jQuery(button).text('Requested');
-            jQuery(button).addClass('not-approved');
+            jQuery(button).addClass('requested');
             jQuery(button).siblings("small").addClass('hidden');
           } else if (approveby == 'funding-no') {
             jQuery(button).text('No');

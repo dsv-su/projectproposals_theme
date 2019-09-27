@@ -518,7 +518,7 @@ $lasteditor = user_load(array_values($editors)[0]);
                 if ($researcher && !$cancelled) {
                     if (isset($node->field_request_to_dsv_economy['und'][0]['value']) &&
                         $node->field_request_to_dsv_economy['und'][0]['value']) {
-                        print '<span class="not-approved">Requested</span>';
+                        print '<span class="requested">Requested</span>';
                     } else {
                         print '<span class="not-approved hidden">Requested</span>';
                         print '<a href="node/approve/'.$node->nid. '" class="approve request-dsv-economy'.$haspermission.'">Request approval</a>';
@@ -582,6 +582,8 @@ $lasteditor = user_load(array_values($editors)[0]);
         print '<div class="final-submissions">';
             print '<span class="field-label">Final submission: </span>';
             $haspermission = '';
+            $finalrequested = $finalapproved = false;
+
             if ((($admin || $researcher) &&
                 isset($node->field_ok_from_unit_head['und'][0]['value']) &&
                 $node->field_ok_from_unit_head['und'][0]['value'] &&
@@ -591,15 +593,47 @@ $lasteditor = user_load(array_values($editors)[0]);
                 $node->field_ok_from_uno['und'][0]['value']) || ($vicehead && (strtotime($node->field_deadline['und'][0]['value']) < time()))) {
                 $haspermission = ' haspermission';
             }
-            if ($node->field_sent_to_birgitta_o['und'][0]['value']) {
-                print '<span class="approved">Sent</span>';
-            } else if ($haspermission && !$cancelled) {
-                print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final'.$haspermission.'">Send</a>';
-                print '<span class="not-approved hidden'.$haspermission.'">Not sent</span>';
-            } else {
-                print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final hidden'.$haspermission.'">Sent</a>';
-                print '<span class="not-approved'.$haspermission.'">Not sent</span>';
+
+            if (isset($node->field_sent_to_birgitta_o['und'][0]['value']) &&
+                $node->field_sent_to_birgitta_o['und'][0]['value']) {
+                $finalrequested = true;
             }
+            if (isset($node->field_final_submission_approved['und'][0]['value']) &&
+                $node->field_final_submission_approved['und'][0]['value']) {
+                $finalapproved = true;
+            }
+
+            if ($finalrequested && $finalapproved) {
+                // Approved by VC
+                print '<span class="approved">Sent</span>';
+            } else if ($finalrequested && !$finalapproved) {
+                // Researcher requested approval from VC, approval is needed
+                if ($haspermission && !$cancelled) {
+                    if ($researcher) {
+                        print '<span class="requested">Requested</span>';
+                    } else {
+                        print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final-approve'.$haspermission.'">Approve sending</a>';
+                    }
+                    print '<span class="not-approved hidden'.$haspermission.'">Not sent</span>';
+                } else {
+                    print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final hidden'.$haspermission.'">Sent</a>';
+                    print '<span class="not-approved'.$haspermission.'">Not sent</span>';
+                }
+            } else {
+                // Other cases e.g. no request is made
+                if ($haspermission && !$cancelled) {
+                    if ($researcher) {
+                        print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final-request'.$haspermission.'">Request approval</a>';
+                    } else {
+                        print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final'.$haspermission.'">Send</a>';
+                    }
+                    print '<span class="not-approved hidden'.$haspermission.'">Not sent</span>';
+                } else {
+                    print '<a href="'.$base_url.'/'.'node/approve/'.$node->nid. '" class="approve final hidden'.$haspermission.'">Sent</a>';
+                    print '<span class="not-approved'.$haspermission.'">Not sent</span>';
+                }
+            }
+
         print '</div>';
 
         print '<div class="decision-date">';
@@ -610,7 +644,7 @@ $lasteditor = user_load(array_values($editors)[0]);
             print render($content['field_start_date']);
         print '</div>';
 
-        // Final approval
+        // Funding approval
         print '<div class="approved-funding">';
             print '<span class="field-label">Final funding granted: </span>';
             $haspermission = '';
