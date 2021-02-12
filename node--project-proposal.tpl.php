@@ -125,6 +125,8 @@ if (!$editable) {
     $cancellable = false;
 }
 
+$cancelledclass = '';
+
 $last_two_logins = db_query("SELECT login, hostname, one_time
                    FROM {login_history}
                    WHERE uid = :uid
@@ -601,7 +603,7 @@ if ($lastrevision->timestamp >= $lastlogin && $editable && $lasteditor->uid <> $
         $haspermission = '';
         $finalrequested = $finalapproved = false;
 
-        if ((($admin || $researcher) &&
+        if ((($admin || $researcher || $vicehead) &&
             isset($node->field_ok_from_unit_head['und'][0]['value']) &&
             $node->field_ok_from_unit_head['und'][0]['value'] &&
             isset($node->field_ok_from_dsv_economy['und'][0]['value']) &&
