@@ -557,8 +557,8 @@ a.cancel:visited {
     margin-top: 1.6em;
 }
 
-.form-type-textfield .ctools-auto-submit-processed {
-  width: 200px;
+.views-widget-filter-field_funding_organization_tid {
+  max-width: 300px;
 }
 
 .views-widget-filter-title {
