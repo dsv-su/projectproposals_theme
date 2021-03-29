@@ -561,6 +561,10 @@ a.cancel:visited {
   max-width: 300px;
 }
 
+.views-widget-filter-title, .views-widget-filter-realname {
+  max-width: 200px;
+}
+
 .views-widget-filter-title {
   clear: left;
 }
